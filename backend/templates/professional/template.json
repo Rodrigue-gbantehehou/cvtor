@@ -1,0 +1,15 @@
+{
+  "templateName": "Professional",
+  "fonts": {"heading": "Roboto", "body": "Roboto"},
+  "colors": {"primary": "#00A19C", "secondary": "#FFFFFF", "accent": "#00766C"},
+  "layout": {"twoColumn": true, "margins": "10mm"},
+  "sections": [
+    {"type": "contact", "label": "Contact", "columns": 1},
+    {"type": "social", "label": "Social Media", "columns": 1},
+    {"type": "languages", "label": "Languages", "columns": 1},
+    {"type": "skills", "label": "Pro Skills", "columns": 1},
+    {"type": "summary", "label": "About Me", "columns": 1},
+    {"type": "experience", "label": "Experience", "columns": 1},
+    {"type": "education", "label": "Education", "columns": 1}
+  ]
+}

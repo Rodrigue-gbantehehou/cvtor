@@ -1,0 +1,14 @@
+{
+  "templateName": "Tokyo",
+  "fonts": {"heading": "Montserrat", "body": "Open Sans"},
+  "colors": {"primary": "#5B6B8C", "secondary": "#FFFFFF", "accent": "#7A8AA8"},
+  "layout": {"twoColumn": true, "margins": "15mm"},
+  "sections": [
+    {"type": "contact", "label": "Contact", "columns": 1},
+    {"type": "skills", "label": "Compétences", "columns": 1},
+    {"type": "languages", "label": "Langues", "columns": 1},
+    {"type": "summary", "label": "Profil", "columns": 1},
+    {"type": "experience", "label": "Expériences Professionnelles", "columns": 1},
+    {"type": "education", "label": "Formation", "columns": 1}
+  ]
+}

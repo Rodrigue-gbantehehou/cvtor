@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - {{ data.profile.name | default('Nom Prénom') }}</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="cv-container">
+    <!-- En-tête avec nom et titre -->
+    <header class="header">
+      <h1 class="name">{{ data.profile.name | default('PAUL RICHARD') | upper }}</h1>
+      <div class="title-line"></div>
+      {% if data.profile.title %}
+      <p class="profession">{{ data.profile.title }}</p>
+      {% endif %}
+      <div class="title-line"></div>
+    </header>
+
+    <div class="main-layout">
+      <!-- Colonne gauche -->
+      <div class="left-column">
+        <!-- Contact -->
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">CONTACT</h3>
+          <div class="contact-list">
+            {% if data.profile.location %}
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ data.profile.location }}</span>
+            </div>
+            {% endif %}
+            {% if data.profile.phone %}
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>{{ data.profile.phone }}</span>
+            </div>
+            {% endif %}
+            {% if data.profile.email %}
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>{{ data.profile.email }}</span>
+            </div>
+            {% endif %}
+            {% if data.profile.linkedin %}
+            <div class="contact-item">
+              <i class="fab fa-linkedin"></i>
+              <span>{{ data.profile.linkedin }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
+        <!-- Compétences -->
+        {% if data.skills and data.skills.groups %}
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">COMPÉTENCES</h3>
+          <div class="skills-list">
+            {% for group in data.skills.groups %}
+              {% if group.label %}
+              <div class="skill-category">{{ group.label }}</div>
+              {% endif %}
+              {% for skill in group.items %}
+              <div class="skill-item">{{ skill }}</div>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        <!-- Langues -->
+        {% if data.languages %}
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">LANGUES</h3>
+          <div class="languages-list">
+            {% for lang in data.languages %}
+            <div class="language-item">
+              <span class="lang-name">{{ lang.name }}</span>
+              <span class="lang-separator">:</span>
+              <span class="lang-level">{{ lang.level }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+      </div>
+
+      <!-- Colonne droite -->
+      <div class="right-column">
+        <!-- Profil -->
+        {% if data.summary %}
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-user"></i> PROFIL</h3>
+          <p class="profile-text">{{ data.summary }}</p>
+        </section>
+        {% endif %}
+
+        <!-- Expériences Professionnelles -->
+        {% if data.experience %}
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-briefcase"></i> EXPÉRIENCES PROFESSIONNELLES</h3>
+          {% for exp in data.experience %}
+          <div class="experience-item">
+            <h4 class="exp-title">{{ exp.position | default(exp.role) | upper }}</h4>
+            <div class="exp-meta">
+              <span class="exp-company">{{ exp.company }}</span>
+              {% if exp.location %}
+              <span class="separator">|</span>
+              <span class="exp-location">{{ exp.location }}</span>
+              {% endif %}
+              {% if exp.dates or (exp.start and exp.end) %}
+              <span class="separator">|</span>
+              <span class="exp-dates">{{ exp.dates | default(exp.start ~ ' - ' ~ exp.end) }}</span>
+              {% endif %}
+            </div>
+            {% if exp.tasks or exp.bullets %}
+            <ul class="exp-tasks">
+              {% for task in exp.tasks | default(exp.bullets) %}
+              <li>{{ task }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </section>
+        {% endif %}
+
+        <!-- Formation -->
+        {% if data.education %}
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-graduation-cap"></i> FORMATION</h3>
+          {% for edu in data.education %}
+          <div class="education-item">
+            <h4 class="edu-title">{{ edu.degree }}</h4>
+            <div class="edu-meta">
+              <span class="edu-school">{{ edu.institution | default(edu.school) }}</span>
+              {% if edu.location %}
+              <span class="separator">|</span>
+              <span class="edu-location">{{ edu.location }}</span>
+              {% endif %}
+              {% if edu.dates or edu.year %}
+              <span class="separator">|</span>
+              <span class="edu-dates">{{ edu.dates | default(edu.year) }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
