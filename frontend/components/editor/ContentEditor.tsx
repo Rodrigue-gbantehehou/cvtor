@@ -124,6 +124,16 @@ export default function ContentEditor() {
               />
             </div>
             <div>
+              <label className="text-xs text-slate-400 block mb-1">Photo (URL)</label>
+              <input
+                type="text"
+                value={data.profile?.photo || ''}
+                onChange={(e) => updateProfile('photo', e.target.value)}
+                placeholder="https://exemple.com/photo.jpg"
+                className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
               <label className="text-xs text-slate-400 block mb-1">Email</label>
               <input
                 type="email"
