@@ -24,12 +24,17 @@ Preferred communication style: Simple, everyday language.
 - 📑 **Templates CSS Stylisés Premium** - Styles professionnels avec typographies Google Fonts
   - **Classique**: Palette or élégant (#d4af37) avec Playfair Display et Crimson Text
   - **Moderne**: Gradients indigo (#4f46e5/#7c3aed) avec Inter
+  - **Professional**: Design turquoise/teal (#00A19C) avec photo circulaire, layout 2 colonnes, barres de compétences
+  - **Tokyo**: Style minimaliste bleu/gris (#5B6B8C) avec typographie Montserrat, design épuré
 - 🔄 **Preview en Temps Réel** - Prévisualisation instantanée agrandie au format A4
 - 📥 **Export PDF/DOCX** - Export professionnel vers formats standards
 - 🎯 **Drag & Drop Avancé** - Réorganisation intuitive des sections
 - ⚡ **Gestion d'Erreurs** - Messages explicites pour debugging IA
 - 📄 **Format A4 Standard** - Prévisualisation au format A4 (210mm x 297mm) centré et scrollable
 - 🖥️ **Interface Optimisée** - Disposition améliorée avec prévisualisation agrandie
+- 📸 **Support Photo de Profil** - Nouveaux templates avec support pour photos circulaires
+- 🌐 **Réseaux Sociaux** - Affichage des profils sociaux (Facebook, Twitter, Instagram, LinkedIn)
+- 🗣️ **Langues** - Section dédiée pour les compétences linguistiques avec niveaux
 
 **🔧 Améliorations Techniques:**
 - **Migration vers Hugging Face API gratuite** (remplacement d'OpenAI)
