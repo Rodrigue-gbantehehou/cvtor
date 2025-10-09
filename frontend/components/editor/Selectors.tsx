@@ -18,11 +18,19 @@ export default function Selectors() {
         if (!res.ok) throw new Error(await res.text())
         const json = await res.json()
         setTemplates(json.templates) // ["moderne", "classique", ...]
+        // Auto-load first template
+        if (json.templates && json.templates.length > 0) {
+          loadTemplate(json.templates[0])
+        }
       } catch (e) {
         console.error("Erreur fetch templates", e)
       }
     }
     fetchTemplates()
+    // Auto-load first dataset
+    if (datasets && datasets.length > 0) {
+      loadData(datasets[0].path)
+    }
   }, [])
 
   async function loadTemplate(name: string) {
@@ -54,12 +62,12 @@ export default function Selectors() {
       <div className="text-sm font-semibold">Sources</div>
       <div className="flex flex-col gap-2">
         <label className="text-xs text-slate-400">Template</label>
-        <select className="bg-slate-800 border border-slate-700 rounded px-2 py-1" onChange={(e)=>loadTemplate(e.target.value)}>
+        <select className="bg-slate-800 border border-slate-700 rounded px-2 py-1" onChange={(e)=>loadTemplate(e.target.value)} defaultValue={templates[0]}>
           {templates.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
 
         <label className="text-xs text-slate-400">Données</label>
-        <select className="bg-slate-800 border border-slate-700 rounded px-2 py-1" onChange={(e)=>loadData(e.target.value)}>
+        <select className="bg-slate-800 border border-slate-700 rounded px-2 py-1" onChange={(e)=>loadData(e.target.value)} defaultValue={datasets[0]?.path}>
           {datasets.map(d => <option key={d.path} value={d.path}>{d.label}</option>)}
         </select>
       </div>

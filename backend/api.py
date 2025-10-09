@@ -49,7 +49,9 @@ class GenerateRequest(BaseModel):
 
 # --- UTILS ---
 def load_template_env(template_name: str):
-    tpl_dir = TEMPLATES_DIR / template_name
+    # Normalize to lowercase for folder lookup
+    template_folder = template_name.lower()
+    tpl_dir = TEMPLATES_DIR / template_folder
     if not tpl_dir.exists():
         raise HTTPException(status_code=404, detail=f"Template '{template_name}' introuvable")
     return Environment(
@@ -58,14 +60,23 @@ def load_template_env(template_name: str):
     )
 
 def render_html(template_name: str, data: Dict[str, Any]) -> str:
-    env = load_template_env(template_name)
+    # Normalize template name to lowercase for folder lookup
+    template_folder = template_name.lower()
+    env = load_template_env(template_folder)
     template_file = "template.jinja2"
     template = env.get_template(template_file)
 
-    css_path = TEMPLATES_DIR / template_name / "style.css"
+    css_path = TEMPLATES_DIR / template_folder / "style.css"
     css_content = css_path.read_text(encoding="utf-8") if css_path.exists() else ""
 
-    html_body = template.render(**data)
+    # Load template metadata for rendering
+    template_json_path = TEMPLATES_DIR / template_folder / "template.json"
+    template_metadata = {}
+    if template_json_path.exists():
+        import json
+        template_metadata = json.loads(template_json_path.read_text(encoding="utf-8"))
+
+    html_body = template.render(data=data, template=template_metadata)
     html_full = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -105,6 +116,9 @@ def preview_html(req: PreviewRequest):
         html = render_html(req.template_name, req.data)
         return {"html": html}
     except Exception as e:
+        import traceback
+        error_detail = f"{str(e)}\n{traceback.format_exc()}"
+        print(f"Preview error: {error_detail}")
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/export/pdf")
