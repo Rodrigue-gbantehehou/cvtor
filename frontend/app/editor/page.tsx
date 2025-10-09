@@ -110,8 +110,13 @@ export default function EditorPage() {
         </div>
       </header>
 
-      <div className="max-w-screen-2xl mx-auto p-6 grid grid-cols-[360px_1fr_400px] gap-6">
+      <div className="max-w-screen-2xl mx-auto p-6 grid grid-cols-[340px_1fr] gap-6">
         <aside className="space-y-6">
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-700/50 shadow-xl">
+            <h2 className="text-lg font-bold text-white mb-4">✏️ Édition de Contenu</h2>
+            <ContentEditor />
+          </div>
+
           <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-700/50 shadow-xl">
             <h2 className="text-lg font-bold text-white mb-4">📋 Configuration</h2>
             <Selectors />
@@ -188,13 +193,6 @@ export default function EditorPage() {
             )}
           </div>
         </section>
-
-        <aside className="space-y-6">
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-5 border border-slate-700/50 shadow-xl">
-            <h2 className="text-lg font-bold text-white mb-4">✏️ Édition de Contenu</h2>
-            <ContentEditor />
-          </div>
-        </aside>
       </div>
     </div>
   )

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,10 +7,10 @@
 }
 
 body {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  line-height: 1.6;
-  color: #2c3e50;
-  background-color: #f5f5f5;
+  font-family: 'Crimson Text', 'Georgia', 'Times New Roman', serif;
+  line-height: 1.7;
+  color: #1a1a1a;
+  background-color: #f8f9fa;
 }
 
 .cv-container {
@@ -16,14 +18,25 @@ body {
   min-height: 297mm;
   margin: 20px auto;
   background: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  padding: 40px 50px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+  padding: 30mm 20mm 25mm 20mm;
 }
 
 .header {
-  border-bottom: 3px solid #2c3e50;
-  padding-bottom: 30px;
-  margin-bottom: 30px;
+  border-bottom: 1px solid #d4af37;
+  padding-bottom: 35px;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: #d4af37;
 }
 
 .profile-section {
@@ -38,7 +51,7 @@ body {
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #2c3e50;
+  border: 4px solid #d4af37;
   flex-shrink: 0;
 }
 
@@ -53,18 +66,22 @@ body {
 }
 
 .name {
-  font-size: 36px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+  font-size: 42px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', 'Georgia', serif;
 }
 
 .tagline {
-  font-size: 18px;
-  color: #7f8c8d;
+  font-size: 19px;
+  color: #666;
   font-style: italic;
-  margin-top: 5px;
+  margin-top: 8px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 .contact-info {
@@ -79,11 +96,11 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #34495e;
+  color: #444;
 }
 
 .contact-item i {
-  color: #2c3e50;
+  color: #d4af37;
   width: 18px;
 }
 
@@ -105,17 +122,18 @@ body {
 }
 
 .section-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 25px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #d4af37;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2.5px;
+  font-family: 'Playfair Display', 'Georgia', serif;
 }
 
 .section-title i {
@@ -126,7 +144,7 @@ body {
   font-size: 15px;
   line-height: 1.8;
   text-align: justify;
-  color: #34495e;
+  color: #444;
 }
 
 .skills-grid {
@@ -137,15 +155,15 @@ body {
 .skill-category h4 {
   font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 10px;
 }
 
 .skill-item {
   padding: 8px 0;
   font-size: 14px;
-  color: #34495e;
-  border-bottom: 1px solid #ecf0f1;
+  color: #444;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .skill-item:last-child {
@@ -160,7 +178,7 @@ body {
   margin-bottom: 30px;
   position: relative;
   padding-left: 20px;
-  border-left: 2px solid #bdc3c7;
+  border-left: 2px solid #d4af37;
 }
 
 .timeline-item:last-child {
@@ -175,13 +193,14 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #2c3e50;
+  background: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
 }
 
 .timeline-date {
   font-size: 13px;
   font-weight: 600;
-  color: #7f8c8d;
+  color: #d4af37;
   margin-bottom: 8px;
   font-style: italic;
 }
@@ -189,14 +208,14 @@ body {
 .timeline-content h4 {
   font-size: 17px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 5px;
 }
 
 .timeline-content h5 {
   font-size: 15px;
   font-weight: 500;
-  color: #7f8c8d;
+  color: #666;
   margin-bottom: 10px;
 }
 
@@ -204,7 +223,7 @@ body {
   margin-left: 20px;
   margin-bottom: 6px;
   font-size: 14px;
-  color: #34495e;
+  color: #444;
   line-height: 1.6;
 }
 
@@ -216,7 +235,7 @@ body {
 }
 
 .pdf-button {
-  background: #2c3e50;
+  background: #d4af37;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -224,7 +243,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -232,9 +251,9 @@ body {
 }
 
 .pdf-button:hover {
-  background: #34495e;
+  background: #c29d2d;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 16px rgba(212,175,55,0.4);
 }
 
 @media print {
