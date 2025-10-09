@@ -53,10 +53,11 @@ export default function EditorPage() {
       })
       if (res?.data) {
         setData(res.data)
-        const message = res.message || (res.source === 'openai' 
+        const isSuccess = res.source === 'openai' || res.source === 'huggingface'
+        const message = res.message || (isSuccess
           ? 'Contenu généré avec succès par l\'IA!' 
-          : 'Clé API OpenAI non configurée. Données d\'exemple utilisées.')
-        alert(res.source === 'openai' ? '✅ ' + message : '⚠️ ' + message)
+          : 'Génération IA indisponible. Données d\'exemple utilisées.')
+        alert(isSuccess ? '✅ ' + message : '⚠️ ' + message)
       }
     } catch (error: any) {
       alert('❌ Erreur: ' + (error.message || 'Une erreur est survenue'))

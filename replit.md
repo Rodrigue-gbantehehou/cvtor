@@ -17,24 +17,28 @@ Preferred communication style: Simple, everyday language.
 ## Recent Updates (October 9, 2025)
 
 **✨ Nouvelles Fonctionnalités Implémentées:**
-- 🤖 **Intégration OpenAI GPT-5** - Génération automatique de contenu professionnel pour CV
+- 🤖 **Intégration IA Gratuite Hugging Face** - Génération automatique de contenu professionnel pour CV avec Mistral-7B-Instruct-v0.2 (100% gratuit)
 - 🎨 **Interface Moderne Tailwind** - Design professionnel avec gradients et animations
 - 🏠 **Landing Page Commerciale** - Page d'accueil attractive présentant les fonctionnalités
 - ✏️ **Éditeur de Contenu Complet** - Édition inline de profil, résumé, expériences, compétences
 - 📑 **Templates CSS Stylisés** - Styles "Classique" (élégant) et "Moderne" (gradient) 
-- 🔄 **Preview en Temps Réel** - Prévisualisation instantanée des changements
+- 🔄 **Preview en Temps Réel** - Prévisualisation instantanée des changements au format A4
 - 📥 **Export PDF/DOCX** - Export professionnel vers formats standards
 - 🎯 **Drag & Drop Avancé** - Réorganisation intuitive des sections
 - ⚡ **Gestion d'Erreurs** - Messages explicites pour debugging IA
-- 📄 **Format A4 Standard** - Prévisualisation au format A4 (210mm x 297mm) centré
+- 📄 **Format A4 Standard** - Prévisualisation au format A4 (210mm x 297mm) centré et scrollable
 
 **🔧 Améliorations Techniques:**
-- Correction de l'intégration OpenAI (gpt-5 model, json_object response format)
-- Installation de Playwright avec dépendances système
-- Amélioration de la gestion d'erreurs côté backend
+- **Migration vers Hugging Face API gratuite** (remplacement d'OpenAI)
+  - Modèle utilisé: mistralai/Mistral-7B-Instruct-v0.2
+  - Token gratuit requis: HF_TOKEN (obtenir sur https://huggingface.co/settings/tokens)
+  - Limite gratuite: plusieurs centaines de requêtes/heure
+- Installation de Playwright avec dépendances système pour génération PDF
+- Amélioration de la gestion d'erreurs côté backend avec messages explicites
 - Interface utilisateur responsive et moderne
 - Migration complète vers l'environnement Replit (Node.js 20, Python avec uv)
-- Ajustement de la disposition de l'éditeur pour affichage format portrait standard
+- **Ajustement de la disposition de l'éditeur** pour affichage format portrait A4 (210mm × 297mm)
+- Correction des types TypeScript pour supporter les sources IA multiples
 
 ## System Architecture
 

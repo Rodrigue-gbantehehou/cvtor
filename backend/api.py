@@ -172,8 +172,9 @@ async def generate_content(req: GenerateRequest):
     try:
         from huggingface_hub import InferenceClient
         
-        # Utiliser l'API gratuite de Hugging Face (pas de token nécessaire pour les modèles publics)
-        client = InferenceClient()
+        # Utiliser l'API gratuite de Hugging Face avec le token
+        hf_token = os.getenv("HF_TOKEN")
+        client = InferenceClient(token=hf_token) if hf_token else InferenceClient()
         
         # Construire le prompt basé sur les données existantes
         user_description = req.prompt or f"Poste: {req.role or 'Candidat professionnel'}"

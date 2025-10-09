@@ -72,7 +72,9 @@ interface GenerateRequest {
 
 interface GenerateResponse {
   data: ResumeData;
-  source: 'huggingface' | 'stub';
+  source: 'huggingface' | 'openai' | 'stub';
+  message?: string;
+  error?: string;
 }
 
 export async function generateContent(req: GenerateRequest): Promise<GenerateResponse> {
