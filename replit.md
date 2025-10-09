@@ -21,23 +21,34 @@ Preferred communication style: Simple, everyday language.
 - 🎨 **Interface Moderne Tailwind** - Design professionnel avec gradients et animations
 - 🏠 **Landing Page Commerciale** - Page d'accueil attractive présentant les fonctionnalités
 - ✏️ **Éditeur de Contenu Complet** - Édition inline de profil, résumé, expériences, compétences
-- 📑 **Templates CSS Stylisés** - Styles "Classique" (élégant) et "Moderne" (gradient) 
-- 🔄 **Preview en Temps Réel** - Prévisualisation instantanée des changements au format A4
+- 📑 **Templates CSS Stylisés Premium** - Styles professionnels avec typographies Google Fonts
+  - **Classique**: Palette or élégant (#d4af37) avec Playfair Display et Crimson Text
+  - **Moderne**: Gradients indigo (#4f46e5/#7c3aed) avec Inter
+- 🔄 **Preview en Temps Réel** - Prévisualisation instantanée agrandie au format A4
 - 📥 **Export PDF/DOCX** - Export professionnel vers formats standards
 - 🎯 **Drag & Drop Avancé** - Réorganisation intuitive des sections
 - ⚡ **Gestion d'Erreurs** - Messages explicites pour debugging IA
 - 📄 **Format A4 Standard** - Prévisualisation au format A4 (210mm x 297mm) centré et scrollable
+- 🖥️ **Interface Optimisée** - Disposition améliorée avec prévisualisation agrandie
 
 **🔧 Améliorations Techniques:**
 - **Migration vers Hugging Face API gratuite** (remplacement d'OpenAI)
   - Modèle utilisé: mistralai/Mistral-7B-Instruct-v0.2
   - Token gratuit requis: HF_TOKEN (obtenir sur https://huggingface.co/settings/tokens)
   - Limite gratuite: plusieurs centaines de requêtes/heure
+- **Nouvelle disposition de l'éditeur** (October 9, 2025)
+  - Réorganisation verticale: "Édition de Contenu" déplacée au-dessus de "Configuration"
+  - Grille optimisée: 3 colonnes → 2 colonnes (340px sidebar + prévisualisation élargie)
+  - Prévisualisation agrandie pour meilleure expérience utilisateur
+- **Design Premium des Templates CSS** (October 9, 2025)
+  - Template Classique: palette dorée cohérente, imports Google Fonts (Playfair Display + Crimson Text)
+  - Template Moderne: gradients indigo modernisés, imports Google Fonts (Inter)
+  - Padding optimisé à 30mm en haut pour compatibilité impression A4
+  - Hiérarchie typographique améliorée et contrastes renforcés
 - Installation de Playwright avec dépendances système pour génération PDF
 - Amélioration de la gestion d'erreurs côté backend avec messages explicites
 - Interface utilisateur responsive et moderne
 - Migration complète vers l'environnement Replit (Node.js 20, Python avec uv)
-- **Ajustement de la disposition de l'éditeur** pour affichage format portrait A4 (210mm × 297mm)
 - Correction des types TypeScript pour supporter les sources IA multiples
 
 ## System Architecture
