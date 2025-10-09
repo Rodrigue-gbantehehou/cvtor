@@ -153,7 +153,10 @@ def export_docx_endpoint(req: ExportRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/generate")
-def generate_content(req: GenerateRequest):
+async def generate_content(req: GenerateRequest):
+    # Reference: blueprint:python_openai
+    # the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
+    
     base = req.data or {}
     fallback = {
         "profile": base.get("profile") or {"name": "Prénom Nom", "title": req.role or "Candidat"},
@@ -163,32 +166,63 @@ def generate_content(req: GenerateRequest):
         "skills": base.get("skills") or {"groups": []},
     }
 
-    hf_key = os.getenv("HF_API_KEY")
-    if not hf_key:
-        return {"data": fallback, "source": "stub"}
-
-    import httpx
-    url = os.getenv("HF_MODEL_URL", "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3")
-    payload = {
-        "inputs": f"[SYSTEM]\nTu es un assistant RH. Génère un CV JSON.\n[USER]\n{req.prompt or json.dumps(base, ensure_ascii=False)}",
-        "parameters": {"max_new_tokens": 512, "temperature": 0.3},
-    }
-    headers = {"Authorization": f"Bearer {hf_key}"}
+    openai_key = os.getenv("OPENAI_API_KEY")
+    if not openai_key:
+        return {"data": fallback, "source": "stub", "message": "OpenAI API key not configured"}
 
     try:
-        with httpx.Client(timeout=60) as client:
-            r = client.post(url, headers=headers, json=payload)
-            r.raise_for_status()
-            text = r.text
-            start = text.find("{")
-            end = text.rfind("}")
-            if start != -1 and end != -1 and end > start:
-                data = json.loads(text[start:end + 1])
-                return {"data": data, "source": "huggingface"}
-    except Exception:
-        return {"data": fallback, "source": "stub"}
+        from openai import OpenAI
+        client = OpenAI(api_key=openai_key)
+        
+        # Construire le prompt basé sur les données existantes
+        user_prompt = req.prompt or f"Poste visé: {req.role or 'Candidat'}"
+        
+        system_prompt = """Tu es un expert en rédaction de CV professionnel. 
+Génère un CV complet et professionnel en français au format JSON.
+Le JSON doit contenir:
+- profile: {name, title, contacts: {envelope: email, phone, map-marker-alt: location, linkedin}}
+- summary: un résumé professionnel convaincant de 2-3 phrases
+- experience: liste d'objets {company, role, start, end, bullets: [liste de réalisations]}
+- education: liste d'objets {school, degree, year}
+- skills: {groups: [{label, items: [liste de compétences]}]}
 
-    return {"data": fallback, "source": "stub"}
+Retourne UNIQUEMENT le JSON, sans texte explicatif."""
+
+        response = client.chat.completions.create(
+            model="gpt-5",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            response_format={"type": "json_object"}
+        )
+        
+        generated_text = response.choices[0].message.content
+        generated_data = json.loads(generated_text)
+        
+        # Fusionner avec les données existantes
+        result = {
+            "profile": generated_data.get("profile", fallback["profile"]),
+            "summary": generated_data.get("summary", fallback["summary"]),
+            "experience": generated_data.get("experience", fallback["experience"]),
+            "education": generated_data.get("education", fallback["education"]),
+            "skills": generated_data.get("skills", fallback["skills"]),
+        }
+        
+        return {"data": result, "source": "openai", "message": "Contenu généré avec succès par l'IA"}
+    except Exception as e:
+        error_msg = str(e)
+        print(f"[generate] OpenAI error: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        
+        # Retourner un message d'erreur explicite
+        return {
+            "data": fallback, 
+            "source": "stub", 
+            "error": error_msg,
+            "message": f"Impossible de générer avec l'IA: {error_msg}. Données d'exemple utilisées."
+        }
 
 @app.get("/", response_class=HTMLResponse)
 def root():
