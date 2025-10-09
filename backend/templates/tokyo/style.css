@@ -101,6 +101,29 @@ body {
   color: #555;
 }
 
+/* Réseaux Sociaux */
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.social-item i {
+  color: #7A8AA8;
+  width: 18px;
+}
+
+.social-item span {
+  color: #555;
+}
+
 /* Compétences */
 .skills-list {
   display: flex;

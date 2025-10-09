@@ -54,6 +54,21 @@
           </div>
         </section>
 
+        <!-- Réseaux Sociaux -->
+        {% if data.social %}
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">RÉSEAUX SOCIAUX</h3>
+          <div class="social-list">
+            {% for platform in data.social %}
+            <div class="social-item">
+              <i class="fab fa-{{ platform.name | lower }}"></i>
+              <span>{{ platform.handle }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
         <!-- Compétences -->
         {% if data.skills and data.skills.groups %}
         <section class="sidebar-section">
@@ -63,7 +78,7 @@
               {% if group.label %}
               <div class="skill-category">{{ group.label }}</div>
               {% endif %}
-              {% for skill in group.items %}
+              {% for skill in group["items"] | default([]) %}
               <div class="skill-item">{{ skill }}</div>
               {% endfor %}
             {% endfor %}

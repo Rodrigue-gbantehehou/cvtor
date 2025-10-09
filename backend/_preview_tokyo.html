@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>CV Preview</title>
+  <style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.cv-container {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* En-tête */
+.header {
+  padding: 40px 60px;
+  text-align: center;
+  background: white;
+}
+
+.name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #5B6B8C;
+  letter-spacing: 8px;
+  margin-bottom: 10px;
+}
+
+.title-line {
+  width: 100%;
+  height: 2px;
+  background: #5B6B8C;
+  margin: 15px 0;
+}
+
+.profession {
+  font-size: 16px;
+  color: #7A8AA8;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Layout principal */
+.main-layout {
+  display: flex;
+  border-top: 2px solid #e0e0e0;
+}
+
+/* Colonne gauche */
+.left-column {
+  width: 240px;
+  background: white;
+  padding: 30px 25px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.sidebar-section {
+  margin-bottom: 35px;
+}
+
+.sidebar-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5B6B8C;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.contact-item i {
+  color: #7A8AA8;
+  width: 18px;
+  margin-top: 2px;
+}
+
+.contact-item span {
+  flex: 1;
+  color: #555;
+}
+
+/* Réseaux Sociaux */
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.social-item i {
+  color: #7A8AA8;
+  width: 18px;
+}
+
+.social-item span {
+  color: #555;
+}
+
+/* Compétences */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-category {
+  font-weight: 600;
+  font-size: 13px;
+  color: #5B6B8C;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.skill-item {
+  font-size: 12px;
+  color: #555;
+  padding-left: 12px;
+  position: relative;
+}
+
+.skill-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #7A8AA8;
+  border-radius: 50%;
+}
+
+/* Langues */
+.languages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.lang-name {
+  color: #5B6B8C;
+  font-weight: 600;
+}
+
+.lang-separator {
+  color: #999;
+}
+
+.lang-level {
+  color: #555;
+}
+
+/* Colonne droite */
+.right-column {
+  flex: 1;
+  padding: 30px 40px 40px;
+}
+
+.content-section {
+  margin-bottom: 35px;
+}
+
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #5B6B8C;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #5B6B8C;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title i {
+  color: #7A8AA8;
+  font-size: 14px;
+}
+
+.profile-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #555;
+  text-align: justify;
+}
+
+/* Expériences */
+.experience-item {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.experience-item:last-child {
+  border-bottom: none;
+}
+
+.exp-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #5B6B8C;
+  margin-bottom: 8px;
+}
+
+.exp-meta {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.exp-company {
+  font-weight: 600;
+  color: #5B6B8C;
+}
+
+.separator {
+  color: #ccc;
+}
+
+.exp-location,
+.exp-dates {
+  color: #777;
+}
+
+.exp-tasks {
+  margin-left: 20px;
+}
+
+.exp-tasks li {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.exp-tasks li::marker {
+  color: #7A8AA8;
+}
+
+/* Formation */
+.education-item {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.education-item:last-child {
+  border-bottom: none;
+}
+
+.edu-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #5B6B8C;
+  margin-bottom: 8px;
+}
+
+.edu-meta {
+  font-size: 12px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.edu-school {
+  font-weight: 600;
+  color: #5B6B8C;
+}
+
+.edu-location,
+.edu-dates {
+  color: #777;
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+  }
+  
+  .cv-container {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+</style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - Travis Anderson</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="cv-container">
+    <!-- En-tête avec nom et titre -->
+    <header class="header">
+      <h1 class="name">TRAVIS ANDERSON</h1>
+      <div class="title-line"></div>
+      
+      <p class="profession">Développeur Full Stack</p>
+      
+      <div class="title-line"></div>
+    </header>
+
+    <div class="main-layout">
+      <!-- Colonne gauche -->
+      <div class="left-column">
+        <!-- Contact -->
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">CONTACT</h3>
+          <div class="contact-list">
+            
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Paris, France</span>
+            </div>
+            
+            
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>+33 6 12 34 56 78</span>
+            </div>
+            
+            
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>travis.anderson@email.com</span>
+            </div>
+            
+            
+            <div class="contact-item">
+              <i class="fab fa-linkedin"></i>
+              <span>linkedin.com/in/travisanderson</span>
+            </div>
+            
+          </div>
+        </section>
+
+        <!-- Réseaux Sociaux -->
+        
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">RÉSEAUX SOCIAUX</h3>
+          <div class="social-list">
+            
+            <div class="social-item">
+              <i class="fab fa-facebook"></i>
+              <span>@yourfacebook</span>
+            </div>
+            
+            <div class="social-item">
+              <i class="fab fa-twitter"></i>
+              <span>@yourtwitter</span>
+            </div>
+            
+            <div class="social-item">
+              <i class="fab fa-instagram"></i>
+              <span>@yourinstagram</span>
+            </div>
+            
+          </div>
+        </section>
+        
+
+        <!-- Compétences -->
+        
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">COMPÉTENCES</h3>
+          <div class="skills-list">
+            
+              
+              <div class="skill-category">Frontend</div>
+              
+              
+              <div class="skill-item">Drawing</div>
+              
+              <div class="skill-item">Photo</div>
+              
+              <div class="skill-item">Copywrite</div>
+              
+              <div class="skill-item">Computerize</div>
+              
+              <div class="skill-item">Design</div>
+              
+            
+          </div>
+        </section>
+        
+
+        <!-- Langues -->
+        
+        <section class="sidebar-section">
+          <h3 class="sidebar-title">LANGUES</h3>
+          <div class="languages-list">
+            
+            <div class="language-item">
+              <span class="lang-name">English</span>
+              <span class="lang-separator">:</span>
+              <span class="lang-level">Native</span>
+            </div>
+            
+            <div class="language-item">
+              <span class="lang-name">Spanish</span>
+              <span class="lang-separator">:</span>
+              <span class="lang-level">Native</span>
+            </div>
+            
+            <div class="language-item">
+              <span class="lang-name">Italian</span>
+              <span class="lang-separator">:</span>
+              <span class="lang-level">Native</span>
+            </div>
+            
+            <div class="language-item">
+              <span class="lang-name">Mandarin</span>
+              <span class="lang-separator">:</span>
+              <span class="lang-level">Native</span>
+            </div>
+            
+          </div>
+        </section>
+        
+      </div>
+
+      <!-- Colonne droite -->
+      <div class="right-column">
+        <!-- Profil -->
+        
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-user"></i> PROFIL</h3>
+          <p class="profile-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam voluptua. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate.</p>
+        </section>
+        
+
+        <!-- Expériences Professionnelles -->
+        
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-briefcase"></i> EXPÉRIENCES PROFESSIONNELLES</h3>
+          
+          <div class="experience-item">
+            <h4 class="exp-title">JOB POSITION</h4>
+            <div class="exp-meta">
+              <span class="exp-company">Company Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="exp-dates">2020 - 2021</span>
+              
+            </div>
+            
+            <ul class="exp-tasks">
+              
+              <li>Porttitor amet massa Donec apeorttitor dolor et nisl molestie turn tellison lore ipsum dolor tincidilla, lorem ipsum. Qleidundk est deler time. Dona apeorttitor dolor lorem</li>
+              
+            </ul>
+            
+          </div>
+          
+          <div class="experience-item">
+            <h4 class="exp-title">JOB POSITION</h4>
+            <div class="exp-meta">
+              <span class="exp-company">Company Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="exp-dates">2020 - 2021</span>
+              
+            </div>
+            
+            <ul class="exp-tasks">
+              
+              <li>Porttitor amet massa Donec apeorttitor dolor et nisl molestie turn tellison lore ipsum dolor tincidilla, lorem ipsum. Qleidundk est deler time. Dona apeorttitor dolor lorem</li>
+              
+            </ul>
+            
+          </div>
+          
+          <div class="experience-item">
+            <h4 class="exp-title">JOB POSITION</h4>
+            <div class="exp-meta">
+              <span class="exp-company">Company Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="exp-dates">2020 - 2021</span>
+              
+            </div>
+            
+            <ul class="exp-tasks">
+              
+              <li>Porttitor amet massa Donec apeorttitor dolor et nisl molestie turn tellison lore ipsum dolor tincidilla, lorem ipsum. Qleidundk est deler time. Dona apeorttitor dolor lorem</li>
+              
+            </ul>
+            
+          </div>
+          
+        </section>
+        
+
+        <!-- Formation -->
+        
+        <section class="content-section">
+          <h3 class="section-title"><i class="fas fa-graduation-cap"></i> FORMATION</h3>
+          
+          <div class="education-item">
+            <h4 class="edu-title">Master Degree</h4>
+            <div class="edu-meta">
+              <span class="edu-school">University Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="edu-dates">2020 - 2021</span>
+              
+            </div>
+          </div>
+          
+          <div class="education-item">
+            <h4 class="edu-title">Master Degree</h4>
+            <div class="edu-meta">
+              <span class="edu-school">University Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="edu-dates">2020 - 2021</span>
+              
+            </div>
+          </div>
+          
+          <div class="education-item">
+            <h4 class="edu-title">Master Degree</h4>
+            <div class="edu-meta">
+              <span class="edu-school">University Name 2020 | 2021</span>
+              
+              
+              <span class="separator">|</span>
+              <span class="edu-dates">2020 - 2021</span>
+              
+            </div>
+          </div>
+          
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>

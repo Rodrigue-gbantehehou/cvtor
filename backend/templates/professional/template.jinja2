@@ -90,7 +90,7 @@
           <h3 class="sidebar-title">PRO SKILLS</h3>
           <div class="skills-bars">
             {% for group in data.skills.groups %}
-              {% for skill in group.items %}
+              {% for skill in group["items"] | default([]) %}
               <div class="skill-bar">
                 <div class="skill-name">{{ skill }}</div>
                 <div class="bar">
