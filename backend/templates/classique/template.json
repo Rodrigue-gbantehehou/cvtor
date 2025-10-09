@@ -1,0 +1,13 @@
+{
+  "templateName": "Classique",
+  "fonts": {"heading": "Times New Roman", "body": "Times New Roman"},
+  "colors": {"primary": "#000000", "secondary": "#FFFFFF"},
+  "layout": {"twoColumn": false, "margins": "15mm"},
+  "sections": [
+    {"type": "text", "label": "Nom"},
+    {"type": "summary", "label": "Résumé"},
+    {"type": "experience", "label": "Expériences"},
+    {"type": "education", "label": "Formation"},
+    {"type": "skills", "label": "Compétences", "columns": 1}
+  ]
+}

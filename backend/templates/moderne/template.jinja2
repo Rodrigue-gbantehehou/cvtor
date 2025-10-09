@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - {{ data.profile.name | default('Nom Prénom') }}</title>
+  {% if template.templateName | default('') == 'Moderne' %}
+  <link rel="stylesheet" href="styles.css">
+  {% else %}
+  <link rel="stylesheet" href="styles_nevil.css">
+  {% endif %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="cv-container">
+    <header class="header">
+      <div class="profile-section">
+        {% if data.profile.photo %}
+        <div class="profile-image">
+          <img src="{{ data.profile.photo }}" alt="{{ data.profile.name | default('Profil') }}"/>
+        </div>
+        {% endif %}
+        <div class="profile-info">
+          <h1 class="name">{{ data.profile.name | default('Nom Prénom') }}</h1>
+          {% if data.profile.title %}
+          <p class="tagline">{{ data.profile.title }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="contact-info">
+        {% set c = data.profile.contacts | default({}) %}
+        {% for key, val in c.items() | default({}) %}
+          {% if val %}
+          <div class="contact-item"><i class="fas fa-{{ key }}"></i><span>{{ val }}</span></div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </header>
+
+    <div class="main-content">
+      {% set sections = template.sections | default([]) %}
+      {% if template.layout.twoColumn | default(false) %}
+      <div class="left-column">
+        {% for section in sections %}
+          {% if section.type in ['summary','skills'] %}
+          <section class="section">
+            <h3 class="section-title" style="
+              {% if section.style and section.style.align %}text-align: {{ section.style.align }};{% endif %}
+              {% if section.style and section.style.color %}color: {{ section.style.color }}; border-color: {{ section.style.color }};{% endif %}
+              {% if section.style and section.style.size %}font-size: {{ section.style.size }}px;{% endif %}
+            ">
+              {% if section.type == 'summary' %}<i class="fas fa-user"></i>{% elif section.type == 'skills' %}<i class="fas fa-tools"></i>{% endif %}
+              {{ section.label | default('') }}
+            </h3>
+
+            {% if section.type == 'summary' %}
+              <p class="about-text" style="{% if section.style and section.style.align %}text-align: {{ section.style.align }};{% endif %}">
+                {{ data.summary | default('') }}
+              </p>
+            {% elif section.type == 'skills' %}
+              {% set skill_groups = data.skills.groups if data.skills and data.skills.groups is defined else [] %}
+              <div class="skills-grid" style="grid-template-columns: repeat({{ section.columns | default(1) }}, 1fr)">
+                {% for group in skill_groups %}
+                  <div class="skill-category">
+                    {% if group.label %}<h4>{{ group.label }}</h4>{% endif %}
+                    {% for item in group["items"] | default([]) %}
+                      <div class="skill-item"><span>{{ item }}</span></div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </section>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="right-column">
+        {% for section in sections %}
+          {% if section.type in ['experience','education'] %}
+          <section class="section">
+            <h3 class="section-title">
+              {% if section.type == 'experience' %}<i class="fas fa-user-tie"></i>{% else %}<i class="fas fa-university"></i>{% endif %}
+              {{ section.label | default('') }}
+            </h3>
+
+            {% if section.type == 'experience' %}
+              {% set experiences = data.experience | default([]) %}
+              <div class="timeline">
+                {% for xp in experiences %}
+                  <div class="timeline-item">
+                    {% set date_label = (xp.start | default('')) ~ (' - ' ~ (xp.end | upper | default('')) if xp.end else '') %}
+                    {% if date_label.strip() %}
+                    <div class="timeline-date">{{ date_label }}</div>
+                    {% endif %}
+                    <div class="timeline-content">
+                      {% if xp.role %}<h4>{{ xp.role }}</h4>{% endif %}
+                      {% if xp.company %}<h5>{{ xp.company }}</h5>{% endif %}
+                      {% for b in xp.bullets | default([]) %}<li>{{ b }}</li>{% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% elif section.type == 'education' %}
+              {% set educations = data.education | default([]) %}
+              <div class="timeline">
+                {% for ed in educations %}
+                  <div class="timeline-item">
+                    {% if ed.year %}<div class="timeline-date">{{ ed.year }}</div>{% endif %}
+                    <div class="timeline-content">
+                      {% if ed.degree %}<h4>{{ ed.degree }}</h4>{% endif %}
+                      {% if ed.school %}<h5>{{ ed.school }}</h5>{% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </section>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% else %}
+        <!-- One column layout -->
+        <div class="right-column" style="flex:1">
+          {% for section in sections %}
+          <section class="section">
+            <h3 class="section-title" style="
+              {% if section.style and section.style.align %}text-align: {{ section.style.align }};{% endif %}
+              {% if section.style and section.style.color %}color: {{ section.style.color }}; border-color: {{ section.style.color }};{% endif %}
+              {% if section.style and section.style.size %}font-size: {{ section.style.size }}px;{% endif %}
+            ">{{ section.label | default('') }}</h3>
+
+            {% if section.type == 'text' %}
+              <p class="about-text">{{ data.profile.name | default('Nom Prénom') }}</p>
+            {% elif section.type == 'summary' %}
+              <p class="about-text">{{ data.summary | default('') }}</p>
+            {% elif section.type == 'skills' %}
+              {% set skill_groups = data.skills.groups if data.skills and data.skills.groups is defined else [] %}
+              <div class="skills-grid" style="grid-template-columns: repeat({{ section.columns | default(1) }}, 1fr)">
+                {% for group in skill_groups %}
+                  <div class="skill-category">
+                    {% if group.label %}<h4>{{ group.label }}</h4>{% endif %}
+                    {% for item in group["items"] | default([]) %}
+                      <div class="skill-item"><span>{{ item }}</span></div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% elif section.type == 'experience' %}
+              {% set experiences = data.experience | default([]) %}
+              <div class="timeline">
+                {% for xp in experiences %}
+                  <div class="timeline-item">
+                    <div class="timeline-date">{{ (xp.start | default('')) ~ (' - ' ~ (xp.end | upper | default('')) if xp.end else '') }}</div>
+                    <div class="timeline-content">
+                      {% if xp.role %}<h4>{{ xp.role }}</h4>{% endif %}
+                      {% if xp.company %}<h5>{{ xp.company }}</h5>{% endif %}
+                      {% for b in xp.bullets | default([]) %}<li>{{ b }}</li>{% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% elif section.type == 'education' %}
+              {% set educations = data.education | default([]) %}
+              <div class="timeline">
+                {% for ed in educations %}
+                  <div class="timeline-item">
+                    {% if ed.year %}<div class="timeline-date">{{ ed.year }}</div>{% endif %}
+                    <div class="timeline-content">
+                      {% if ed.degree %}<h4>{{ ed.degree }}</h4>{% endif %}
+                      {% if ed.school %}<h5>{{ ed.school }}</h5>{% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </section>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="pdf-button-container">
+    <button id="downloadPdf" class="pdf-button"><i class="fas fa-download"></i> Télécharger PDF</button>
+  </div>
+
+  <script>
+    const btn = document.getElementById('downloadPdf');
+    if (btn) btn.addEventListener('click', () => window.print());
+  </script>
+</body>
+</html>

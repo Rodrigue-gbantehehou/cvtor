@@ -1,0 +1,12 @@
+{
+  "templateName": "Moderne",
+  "fonts": {"heading": "Inter", "body": "Inter"},
+  "colors": {"primary": "#111827", "secondary": "#F3F4F6", "accent": "#2563EB"},
+  "layout": {"twoColumn": true, "sidebarWidth": "38%", "margins": "0"},
+  "sections": [
+    {"type": "summary", "label": "À Propos", "style": {"align": "left"}},
+    {"type": "skills", "label": "Compétences", "columns": 2},
+    {"type": "experience", "label": "Expérience Professionnelle"},
+    {"type": "education", "label": "Formation"}
+  ]
+}
