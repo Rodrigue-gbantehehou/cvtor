@@ -1,0 +1,181 @@
+# CVtor - Professional Resume Builder with AI
+
+## Overview
+
+CVtor is a modern CV/resume builder application that combines template-based document generation with AI-powered content creation. The system allows users to create professional resumes through a visual editor with drag-and-drop functionality, real-time preview, and export capabilities to PDF and DOCX formats.
+
+The application consists of:
+- A **Next.js frontend** providing an interactive editor interface
+- A **FastAPI backend** handling template rendering, document export, and AI integration
+- **Jinja2-based templating** system for customizable CV layouts
+- **AI content generation** capabilities (with optional integration)
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+## Recent Updates (October 9, 2025)
+
+**✨ Nouvelles Fonctionnalités Implémentées:**
+- 🤖 **Intégration OpenAI GPT-5** - Génération automatique de contenu professionnel pour CV
+- 🎨 **Interface Moderne Tailwind** - Design professionnel avec gradients et animations
+- 🏠 **Landing Page Commerciale** - Page d'accueil attractive présentant les fonctionnalités
+- ✏️ **Éditeur de Contenu Complet** - Édition inline de profil, résumé, expériences, compétences
+- 📑 **Templates CSS Stylisés** - Styles "Classique" (élégant) et "Moderne" (gradient) 
+- 🔄 **Preview en Temps Réel** - Prévisualisation instantanée des changements
+- 📥 **Export PDF/DOCX** - Export professionnel vers formats standards
+- 🎯 **Drag & Drop Avancé** - Réorganisation intuitive des sections
+- ⚡ **Gestion d'Erreurs** - Messages explicites pour debugging IA
+
+**🔧 Améliorations Techniques:**
+- Correction de l'intégration OpenAI (gpt-5 model, json_object response format)
+- Installation de Playwright avec dépendances système
+- Amélioration de la gestion d'erreurs côté backend
+- Interface utilisateur responsive et moderne
+
+## System Architecture
+
+### Frontend Architecture (Next.js 14)
+
+**Framework Choice**: Next.js 14 with TypeScript and Tailwind CSS
+- **Rationale**: Provides server-side rendering capabilities, excellent developer experience, and built-in optimization
+- **State Management**: Zustand for global editor state (template, data, selections)
+- **Pros**: Lightweight state management, TypeScript support, minimal boilerplate
+- **Cons**: Less suitable for very complex state scenarios (acceptable for this use case)
+
+**Drag-and-Drop Interface**: React DnD with HTML5 backend
+- **Purpose**: Enable users to reorder CV sections visually
+- **Implementation**: Custom `DndList` component wrapping section items with drag/drop hooks
+
+**Component Structure**:
+- `/app` - Next.js App Router pages (home, editor)
+- `/components/editor` - Modular editor components (Canvas, ContentEditor, StylePanel, etc.)
+- `/lib` - API client and utilities
+- `/store` - Zustand state management
+
+### Backend Architecture (FastAPI + Python)
+
+**Framework Choice**: FastAPI for REST API
+- **Rationale**: High performance, automatic OpenAPI documentation, async support, Python ecosystem access
+- **Pros**: Type validation via Pydantic, excellent for JSON APIs, fast execution
+- **Cons**: Requires Python runtime (acceptable trade-off for template rendering needs)
+
+**Template Rendering Pipeline**:
+1. **Jinja2 Templates** - Stored in `/backend/templates/{template_name}/`
+   - `template.jinja2` - HTML structure with template variables
+   - `style.css` - Template-specific styling
+   - `template.json` - Metadata (sections, fonts, colors, layout config)
+   - **Rationale**: Separation of content, presentation, and configuration
+
+2. **Rendering Flow**:
+   - API receives template name + JSON data
+   - Jinja2 loads template and renders HTML with data
+   - CSS is linked via static file serving
+   - HTML returned to frontend or used for export
+
+**Export Mechanisms**:
+- **PDF Generation**: Playwright (Chromium) for HTML-to-PDF conversion
+  - **Rationale**: Pixel-perfect rendering matching preview, supports CSS print styles
+  - **Alternative Considered**: WeasyPrint (rejected due to limited CSS support)
+  
+- **DOCX Generation**: python-docx for structured document creation
+  - **Rationale**: Native Office format support for editable exports
+  - **Limitation**: Layout fidelity lower than PDF (acceptable for editable use case)
+
+### Data Model
+
+**Resume Data Structure** (JSON):
+```json
+{
+  "profile": { "name": "", "title": "", "contacts": {} },
+  "summary": "",
+  "experience": [{ "company": "", "role": "", "dates": "", "bullets": [] }],
+  "education": [{ "institution": "", "degree": "", "dates": "" }],
+  "skills": { "categories": [{ "name": "", "items": [] }] }
+}
+```
+
+**Template Definition**:
+```json
+{
+  "templateName": "",
+  "fonts": { "heading": "", "body": "" },
+  "colors": { "primary": "", "accent": "" },
+  "layout": { "twoColumn": bool, "margins": "" },
+  "sections": [{ "type": "", "label": "", "columns": 1, "style": {} }]
+}
+```
+
+**Architectural Decision**: Schema-less JSON approach
+- **Rationale**: Flexibility for rapid template iteration, simpler than database schema
+- **Trade-off**: No compile-time validation (mitigated by runtime Pydantic validation)
+
+### Real-time Preview System
+
+**Implementation**: iframe-based rendering with asset path rewriting
+- **Problem**: Templates reference local CSS files that need backend resolution
+- **Solution**: `rewriteAssets()` utility rewrites relative paths to backend static URLs
+- **Flow**: 
+  1. Frontend triggers preview on data/template change
+  2. Backend renders HTML via Jinja2
+  3. Frontend patches asset URLs and injects into iframe
+  4. Result: Live preview matching export output
+
+### API Design
+
+**RESTful Endpoints**:
+- `GET /templates` - List available templates
+- `GET /templates/{name}` - Get template definition
+- `POST /preview/html` - Generate HTML preview
+- `POST /export/pdf` - Export to PDF
+- `POST /export/docx` - Export to DOCX
+- `POST /generate/content` - AI content generation (optional)
+
+**CORS Configuration**: Permissive (`allow_origins=["*"]`) for development
+- **Production Consideration**: Should be restricted to frontend domain
+
+## External Dependencies
+
+### Third-party Services
+
+**Supabase** (Optional):
+- **Purpose**: Cloud persistence for templates and resumes
+- **Integration**: `@supabase/supabase-js` client library
+- **Schema**: 
+  - `templates` table - User-created template definitions
+  - `resumes` table - Saved CV data
+- **Configuration**: Environment variables `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- **Fallback**: Application works without Supabase (local-only editing)
+
+### Key Libraries
+
+**Frontend**:
+- `next@14.2.5` - React framework
+- `zustand@4.5.2` - State management
+- `react-dnd@16.0.1` - Drag-and-drop interface
+- `axios@1.7.4` - HTTP client
+- `tailwindcss@3.4.10` - Utility-first CSS
+
+**Backend**:
+- `fastapi@0.115.0` - Web framework
+- `jinja2@3.1.4` - Template engine
+- `playwright@1.40.0` - Browser automation for PDF
+- `python-docx@0.8.11` - DOCX generation
+- `pydantic@2.9.2` - Data validation
+- `uvicorn@0.30.6` - ASGI server
+
+**Optional AI Dependencies** (commented in requirements.txt):
+- `transformers` - Hugging Face models
+- `accelerate` - GPU acceleration
+- **Note**: Require Rust/Cargo, may lack Python 3.13 wheels
+
+### Development Infrastructure
+
+**Port Configuration**:
+- Frontend: 5000 (Next.js dev server)
+- Backend: 8000 (FastAPI/Uvicorn)
+
+**Proxy Setup**: Next.js rewrites `/backend/*` to `http://localhost:8000/*`
+- **Purpose**: Avoid CORS during development, unified URL space
+
+**Static File Serving**: Backend serves `/static` directory for templates, CSS, and sample data
