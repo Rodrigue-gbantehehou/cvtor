@@ -166,23 +166,26 @@ export default function EditorPage() {
           </div>
         </aside>
 
-        <section className="bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
-          <div className="bg-gradient-to-r from-slate-100 to-slate-50 px-4 py-3 border-b border-slate-200">
-            <h2 className="text-sm font-semibold text-slate-700">👁️ Prévisualisation en temps réel</h2>
-          </div>
-          {previewHtmlContent ? (
-            <iframe
-              title="Preview"
-              srcDoc={previewHtmlContent}
-              className="w-full h-[calc(100vh-200px)]"
-            />
-          ) : (
-            <div className="p-8 text-center text-slate-400">
-              <div className="text-6xl mb-4">📄</div>
-              <p>Aucune prévisualisation disponible</p>
-              <p className="text-sm mt-2">Sélectionnez un template et des données pour commencer</p>
+        <section className="bg-slate-100 rounded-xl shadow-2xl overflow-auto border border-slate-200 flex items-start justify-center py-6">
+          <div className="bg-white rounded-lg shadow-xl" style={{ width: '210mm', minHeight: '297mm' }}>
+            <div className="bg-gradient-to-r from-slate-100 to-slate-50 px-4 py-3 border-b border-slate-200">
+              <h2 className="text-sm font-semibold text-slate-700">👁️ Prévisualisation en temps réel</h2>
             </div>
-          )}
+            {previewHtmlContent ? (
+              <iframe
+                title="Preview"
+                srcDoc={previewHtmlContent}
+                className="w-full border-0"
+                style={{ height: '297mm' }}
+              />
+            ) : (
+              <div className="p-8 text-center text-slate-400" style={{ height: '297mm', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="text-6xl mb-4">📄</div>
+                <p>Aucune prévisualisation disponible</p>
+                <p className="text-sm mt-2">Sélectionnez un template et des données pour commencer</p>
+              </div>
+            )}
+          </div>
         </section>
 
         <aside className="space-y-6">

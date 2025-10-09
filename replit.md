@@ -26,12 +26,15 @@ Preferred communication style: Simple, everyday language.
 - 📥 **Export PDF/DOCX** - Export professionnel vers formats standards
 - 🎯 **Drag & Drop Avancé** - Réorganisation intuitive des sections
 - ⚡ **Gestion d'Erreurs** - Messages explicites pour debugging IA
+- 📄 **Format A4 Standard** - Prévisualisation au format A4 (210mm x 297mm) centré
 
 **🔧 Améliorations Techniques:**
 - Correction de l'intégration OpenAI (gpt-5 model, json_object response format)
 - Installation de Playwright avec dépendances système
 - Amélioration de la gestion d'erreurs côté backend
 - Interface utilisateur responsive et moderne
+- Migration complète vers l'environnement Replit (Node.js 20, Python avec uv)
+- Ajustement de la disposition de l'éditeur pour affichage format portrait standard
 
 ## System Architecture
 
