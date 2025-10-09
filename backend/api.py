@@ -154,8 +154,11 @@ def export_docx_endpoint(req: ExportRequest):
 
 @app.post("/generate")
 async def generate_content(req: GenerateRequest):
-    # Reference: blueprint:python_openai
-    # the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
+    """
+    Génère du contenu de CV en utilisant l'API gratuite de Hugging Face.
+    Modèle utilisé: mistralai/Mistral-7B-Instruct-v0.2
+    API gratuite avec limite de quelques centaines de requêtes par heure
+    """
     
     base = req.data or {}
     fallback = {
@@ -166,39 +169,88 @@ async def generate_content(req: GenerateRequest):
         "skills": base.get("skills") or {"groups": []},
     }
 
-    openai_key = os.getenv("OPENAI_API_KEY")
-    if not openai_key:
-        return {"data": fallback, "source": "stub", "message": "OpenAI API key not configured"}
-
     try:
-        from openai import OpenAI
-        client = OpenAI(api_key=openai_key)
+        from huggingface_hub import InferenceClient
+        
+        # Utiliser l'API gratuite de Hugging Face (pas de token nécessaire pour les modèles publics)
+        client = InferenceClient()
         
         # Construire le prompt basé sur les données existantes
-        user_prompt = req.prompt or f"Poste visé: {req.role or 'Candidat'}"
+        user_description = req.prompt or f"Poste: {req.role or 'Candidat professionnel'}"
         
-        system_prompt = """Tu es un expert en rédaction de CV professionnel. 
-Génère un CV complet et professionnel en français au format JSON.
-Le JSON doit contenir:
-- profile: {name, title, contacts: {envelope: email, phone, map-marker-alt: location, linkedin}}
-- summary: un résumé professionnel convaincant de 2-3 phrases
-- experience: liste d'objets {company, role, start, end, bullets: [liste de réalisations]}
-- education: liste d'objets {school, degree, year}
-- skills: {groups: [{label, items: [liste de compétences]}]}
+        prompt = f"""Génère un CV professionnel complet en français au format JSON valide.
 
-Retourne UNIQUEMENT le JSON, sans texte explicatif."""
+Description du candidat: {user_description}
 
+Le JSON doit avoir cette structure exacte:
+{{
+  "profile": {{
+    "name": "Prénom Nom",
+    "title": "Titre professionnel",
+    "contacts": {{
+      "envelope": "email@exemple.com",
+      "phone": "+33 6 12 34 56 78",
+      "map-marker-alt": "Ville, Pays",
+      "linkedin": "linkedin.com/in/profil"
+    }}
+  }},
+  "summary": "Résumé professionnel impactant de 2-3 phrases avec des compétences clés",
+  "experience": [
+    {{
+      "company": "Nom de l'entreprise",
+      "role": "Poste occupé",
+      "start": "Mois Année",
+      "end": "Mois Année",
+      "bullets": [
+        "Réalisation quantifiable avec impact mesurable",
+        "Projet technique avec résultats concrets",
+        "Initiative avec amélioration mesurée"
+      ]
+    }}
+  ],
+  "education": [
+    {{
+      "school": "Nom de l'établissement",
+      "degree": "Diplôme obtenu",
+      "year": "Année"
+    }}
+  ],
+  "skills": {{
+    "groups": [
+      {{
+        "label": "Développement",
+        "items": ["Python", "JavaScript", "React", "Node.js"]
+      }},
+      {{
+        "label": "Outils",
+        "items": ["Git", "Docker", "AWS", "CI/CD"]
+      }}
+    ]
+  }}
+}}
+
+Réponds UNIQUEMENT avec le JSON valide, sans texte avant ou après."""
+
+        # Utiliser le modèle Mistral-7B-Instruct-v0.2 (gratuit)
         response = client.chat.completions.create(
-            model="gpt-5",
+            model="mistralai/Mistral-7B-Instruct-v0.2",
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
+                {"role": "user", "content": prompt}
             ],
-            response_format={"type": "json_object"}
+            max_tokens=1500,
+            temperature=0.7
         )
         
-        generated_text = response.choices[0].message.content
-        generated_data = json.loads(generated_text)
+        generated_text = response.choices[0].message.content.strip()
+        
+        # Extraire le JSON de la réponse (parfois il y a du texte autour)
+        json_start = generated_text.find('{')
+        json_end = generated_text.rfind('}') + 1
+        if json_start >= 0 and json_end > json_start:
+            json_text = generated_text[json_start:json_end]
+            generated_data = json.loads(json_text)
+        else:
+            generated_data = json.loads(generated_text)
         
         # Fusionner avec les données existantes
         result = {
@@ -209,19 +261,19 @@ Retourne UNIQUEMENT le JSON, sans texte explicatif."""
             "skills": generated_data.get("skills", fallback["skills"]),
         }
         
-        return {"data": result, "source": "openai", "message": "Contenu généré avec succès par l'IA"}
+        return {"data": result, "source": "huggingface", "message": "✅ Contenu généré avec succès par l'IA Hugging Face (gratuit)"}
     except Exception as e:
         error_msg = str(e)
-        print(f"[generate] OpenAI error: {error_msg}")
+        print(f"[generate] Hugging Face error: {error_msg}")
         import traceback
         traceback.print_exc()
         
-        # Retourner un message d'erreur explicite
+        # Retourner un message d'erreur explicite avec fallback
         return {
             "data": fallback, 
             "source": "stub", 
             "error": error_msg,
-            "message": f"Impossible de générer avec l'IA: {error_msg}. Données d'exemple utilisées."
+            "message": f"⚠️ Génération IA indisponible: {error_msg[:100]}... Données d'exemple utilisées."
         }
 
 @app.get("/", response_class=HTMLResponse)
