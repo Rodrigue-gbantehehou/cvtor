@@ -4,9 +4,11 @@
   "colors": {"primary": "#111827", "secondary": "#F3F4F6", "accent": "#2563EB"},
   "layout": {"twoColumn": true, "sidebarWidth": "38%", "margins": "0"},
   "sections": [
-    {"type": "summary", "label": "À Propos", "style": {"align": "left"}},
-    {"type": "skills", "label": "Compétences", "columns": 2},
-    {"type": "experience", "label": "Expérience Professionnelle"},
-    {"type": "education", "label": "Formation"}
+    {"type": "contact", "label": "Contact", "columns": 1},
+    {"type": "skills", "label": "Compétences", "columns": 1},
+    {"type": "languages", "label": "Langues", "columns": 1},
+    {"type": "summary", "label": "À Propos", "columns": 1},
+    {"type": "experience", "label": "Expérience Professionnelle", "columns": 1},
+    {"type": "education", "label": "Formation", "columns": 1}
   ]
 }

@@ -1,13 +1,14 @@
 {
   "templateName": "Classique",
   "fonts": {"heading": "Times New Roman", "body": "Times New Roman"},
-  "colors": {"primary": "#000000", "secondary": "#FFFFFF"},
+  "colors": {"primary": "#000000", "secondary": "#FFFFFF", "accent": "#333333"},
   "layout": {"twoColumn": false, "margins": "15mm"},
   "sections": [
-    {"type": "text", "label": "Nom"},
-    {"type": "summary", "label": "Résumé"},
-    {"type": "experience", "label": "Expériences"},
-    {"type": "education", "label": "Formation"},
-    {"type": "skills", "label": "Compétences", "columns": 1}
+    {"type": "contact", "label": "Contact", "columns": 1},
+    {"type": "summary", "label": "Résumé", "columns": 1},
+    {"type": "experience", "label": "Expériences Professionnelles", "columns": 1},
+    {"type": "education", "label": "Formation", "columns": 1},
+    {"type": "skills", "label": "Compétences", "columns": 1},
+    {"type": "languages", "label": "Langues", "columns": 1}
   ]
 }
