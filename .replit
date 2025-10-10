@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["chromium", "fontconfig", "ghostscript", "gitFull", "glib", "harfbuzz", "libxcrypt", "pango", "playwright-driver"]
+packages = ["cargo", "chromium", "fontconfig", "ghostscript", "gitFull", "glib", "harfbuzz", "libiconv", "libxcrypt", "openssl", "pango", "pkg-config", "playwright-driver", "rustc"]
 
 [workflows]
 runButton = "Project"
