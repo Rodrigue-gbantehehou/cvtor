@@ -23,10 +23,10 @@ export default function HomePage() {
               </div>
               
               <div className="hidden md:flex items-center gap-8">
-                <Link href="#modeles" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Modèles</Link>
-                <Link href="#ia" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">IA</Link>
-                <Link href="#tarifs" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Tarifs</Link>
-                <Link href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Contact</Link>
+                <a href="#modeles" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Modèles</a>
+                <a href="#fonctionnalites" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">IA</a>
+                <a href="#temoignages" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Tarifs</a>
+                <a href="#footer" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Contact</a>
                 <button 
                   onClick={() => setIsDark(!isDark)}
                   className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -115,7 +115,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Évolution</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">& Template</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">rapide par IA</p>
               <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Essayer ce modèle
               </button>
@@ -141,16 +141,16 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Export de</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">cinémajson</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">cinématique</p>
               <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Thème dan l'écritaie
+                Essayer ce modèle
               </button>
             </div>
           </div>
         </section>
 
         {/* Fonctionnalités Section */}
-        <section className="container mx-auto px-6 py-20">
+        <section id="fonctionnalites" className="container mx-auto px-6 py-20">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">Fonctionnalités</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -172,7 +172,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Glisser d'épacar facile</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Glisser-déposer facile</h3>
               </div>
             </div>
 
@@ -183,14 +183,14 @@ export default function HomePage() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Clipser de lier échange</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Exporter en un clic</h3>
               </div>
             </div>
           </div>
         </section>
 
         {/* Témoignages Section */}
-        <section className="container mx-auto px-6 py-20">
+        <section id="temoignages" className="container mx-auto px-6 py-20">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">Témoignages</h2>
           
           <div className="max-w-3xl">
@@ -215,15 +215,14 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 dark:border-gray-800 mt-20">
+        <footer id="footer" className="border-t border-gray-200 dark:border-gray-800 mt-20">
           <div className="container mx-auto px-6 py-8">
             <div className="flex flex-wrap justify-between items-center gap-4">
               <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                <Link href="#apropos" className="hover:text-gray-900 dark:hover:text-white">À propos</Link>
-                <Link href="#cgu" className="hover:text-gray-900 dark:hover:text-white">CGU</Link>
-                <Link href="#confidentialite" className="hover:text-gray-900 dark:hover:text-white">Confidentialité</Link>
-                <Link href="#italia" className="hover:text-gray-900 dark:hover:text-white">Italia</Link>
-                <Link href="#contact" className="hover:text-gray-900 dark:hover:text-white">Contact</Link>
+                <a href="#" className="hover:text-gray-900 dark:hover:text-white">À propos</a>
+                <a href="#" className="hover:text-gray-900 dark:hover:text-white">CGU</a>
+                <a href="#" className="hover:text-gray-900 dark:hover:text-white">Confidentialité</a>
+                <a href="#" className="hover:text-gray-900 dark:hover:text-white">Contact</a>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-500">
                 © 2025 CVtor · Intégrera par Assistant Service
