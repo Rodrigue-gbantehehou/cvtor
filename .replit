@@ -38,13 +38,13 @@ outputType = "webview"
 name = "Backend API"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd backend && uvicorn api:app --host 0.0.0.0 --port 8000 --reload"
-waitForPort = 8000
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && uv run uvicorn api:app --host 0.0.0.0 --port 8000 --reload"
+waitForPort = 8000
 
 [[ports]]
 localPort = 5000
@@ -55,8 +55,12 @@ localPort = 8000
 externalPort = 8000
 
 [[ports]]
-localPort = 36625
+localPort = 8001
 externalPort = 3000
+
+[[ports]]
+localPort = 33595
+externalPort = 6000
 
 [[ports]]
 localPort = 36777
