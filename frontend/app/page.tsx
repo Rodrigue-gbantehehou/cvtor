@@ -9,33 +9,36 @@ export default function HomePage() {
   return (
     <div className={isDark ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-[#0f1420] transition-colors">
-        {/* Navigation */}
-        <nav className="border-b border-gray-200 dark:border-gray-800">
+        {/* Navbar flottante */}
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0f1420]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <span className="text-xl font-bold text-gray-900 dark:text-white">CVtor</span>
+                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent">CVtor</span>
               </div>
               
-              <div className="hidden md:flex items-center gap-8">
-                <a href="#modeles" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Modèles</a>
-                <a href="#fonctionnalites" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">IA</a>
-                <a href="#temoignages" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Tarifs</a>
-                <a href="#footer" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Contact</a>
+              <div className="hidden md:flex items-center gap-6">
+                <Link href="/modeles" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Modèles</Link>
+                <Link href="#ia" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">IA</Link>
+                <Link href="/tarifs" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tarifs</Link>
+                <Link href="#footer" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</Link>
                 <button 
                   onClick={() => setIsDark(!isDark)}
-                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   aria-label="Toggle theme"
                 >
                   {isDark ? '🌞' : '🌙'}
                 </button>
-                <Link href="/editor" className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <Link href="/editor" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors">
                   Connexion
+                </Link>
+                <Link href="/editor" className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
+                  Créer un CV
                 </Link>
               </div>
             </div>
@@ -43,41 +46,55 @@ export default function HomePage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="container mx-auto px-6 py-12">
+        <section className="container mx-auto px-6 pt-32 pb-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6 leading-tight">
-                Crée ton CV<br />
-                professionnel<br />
-                en quelques clics
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-100 to-cyan-100 dark:from-indigo-900/30 dark:to-cyan-900/30 rounded-full mb-6">
+                <span className="text-sm font-medium bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent">✨ Nouveau : IA intégrée</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                  Crée ton CV
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-indigo-600 via-cyan-600 to-orange-500 bg-clip-text text-transparent">
+                  professionnel
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                  en quelques clics
+                </span>
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
                 CVtor t'aide à rédiger, structurer et styliser ton CV en un instant.
               </p>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <Link 
                   href="/editor" 
-                  className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+                  className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-xl hover:from-indigo-700 hover:to-cyan-700 font-medium shadow-xl shadow-indigo-500/30 hover:shadow-2xl transition-all"
                 >
                   Commencer gratuitement
                 </Link>
                 <Link 
-                  href="#modeles" 
-                  className="px-8 py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 font-medium"
+                  href="/modeles" 
+                  className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-200 dark:border-gray-700 rounded-xl hover:border-indigo-600 dark:hover:border-indigo-500 font-medium transition-all"
                 >
                   Voir les modèles
                 </Link>
               </div>
+              <p className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+                Ton CV. Ton style. En un clic. 🚀
+              </p>
             </div>
             
             <div className="relative">
               <div className="relative w-full aspect-square">
-                {/* Document illustration */}
+                {/* Document illustration avec couleurs thème */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-80 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl transform rotate-3 p-6">
+                  <div className="w-64 h-80 bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-indigo-900/20 dark:to-cyan-900/20 rounded-2xl shadow-2xl transform rotate-3 p-6">
                     <div className="space-y-3">
-                      <div className="h-4 bg-blue-600/30 rounded w-3/4"></div>
-                      <div className="h-4 bg-blue-600/20 rounded w-1/2"></div>
+                      <div className="h-4 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded w-3/4"></div>
+                      <div className="h-4 bg-gradient-to-r from-indigo-400 to-cyan-400 rounded w-1/2"></div>
                       <div className="mt-6 space-y-2">
                         <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded"></div>
                         <div className="h-3 bg-gray-300 dark:bg-gray-700 rounded"></div>
@@ -85,33 +102,39 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
+                  <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                 </div>
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 text-yellow-400">✨</div>
-                <div className="absolute top-1/4 -right-8 w-6 h-6 text-blue-400">•</div>
-                <div className="absolute bottom-1/4 -left-8 w-6 h-6 text-blue-400">•</div>
+                {/* Decorative elements avec couleurs thème */}
+                <div className="absolute -top-4 -left-4 text-3xl">✨</div>
+                <div className="absolute top-1/4 -right-8 w-12 h-12 bg-orange-400 rounded-full opacity-20"></div>
+                <div className="absolute bottom-1/4 -left-8 w-16 h-16 bg-cyan-400 rounded-full opacity-20"></div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Modèles Section */}
-        <section id="modeles" className="container mx-auto px-6 py-16 bg-gray-50 dark:bg-gray-900/50">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-3">Modèles</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-10">
-            Explore de modèles créatifs et prêts à l'emploi
-          </p>
+        {/* Section Modèles */}
+        <section id="modeles" className="container mx-auto px-6 py-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                Modèles professionnels
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Explore des modèles créatifs et prêts à l'emploi
+            </p>
+          </div>
           
           <div className="grid md:grid-cols-4 gap-6">
             {/* Template Classique */}
-            <Link href="/editor" className="group">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <div className="aspect-[3/4] bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 p-4 relative">
+            <Link href="/editor?template=classique" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
+                <div className="aspect-[3/4] bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-4 relative">
                   <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
                     <div className="h-2 bg-amber-600 rounded w-3/4 mb-2"></div>
                     <div className="h-1.5 bg-amber-400 rounded w-1/2 mb-3"></div>
@@ -124,14 +147,17 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Classique</h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Élégant et intemporel</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Élégant et intemporel</p>
+                  <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    Essayer ce modèle
+                  </button>
                 </div>
               </div>
             </Link>
 
             {/* Template Moderne */}
-            <Link href="/editor" className="group">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+            <Link href="/editor?template=moderne" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
                 <div className="aspect-[3/4] bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-4 relative">
                   <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
                     <div className="h-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded w-3/4 mb-2"></div>
@@ -145,14 +171,17 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Moderne</h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Créatif et dynamique</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Créatif et dynamique</p>
+                  <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    Essayer ce modèle
+                  </button>
                 </div>
               </div>
             </Link>
 
             {/* Template Professional */}
-            <Link href="/editor" className="group">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+            <Link href="/editor?template=professional" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
                 <div className="aspect-[3/4] bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-4 relative">
                   <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm flex gap-2">
                     <div className="w-8 h-8 bg-teal-600 rounded-full flex-shrink-0"></div>
@@ -168,14 +197,17 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Professional</h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Sobre et efficace</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Sobre et efficace</p>
+                  <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    Essayer ce modèle
+                  </button>
                 </div>
               </div>
             </Link>
 
             {/* Template Tokyo */}
-            <Link href="/editor" className="group">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+            <Link href="/editor?template=tokyo" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
                 <div className="aspect-[3/4] bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900/20 dark:to-blue-900/20 p-4 relative">
                   <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
                     <div className="h-2 bg-slate-700 dark:bg-slate-500 rounded w-3/4 mb-2"></div>
@@ -189,75 +221,123 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Tokyo</h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Minimaliste et épuré</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Minimaliste et épuré</p>
+                  <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    Essayer ce modèle
+                  </button>
                 </div>
               </div>
             </Link>
           </div>
         </section>
 
-        {/* Fonctionnalités Section */}
-        <section id="fonctionnalites" className="container mx-auto px-6 py-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-10">Fonctionnalités</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Rédaction assistée par IA</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Génère du contenu professionnel automatiquement</p>
-              </div>
+        {/* Section Fonctionnalités */}
+        <section id="ia" className="bg-gray-50 dark:bg-gray-900/50 py-20">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                  Fonctionnalités puissantes
+                </span>
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                Tout ce dont tu as besoin pour créer un CV parfait
+              </p>
             </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white text-lg mb-2">IA de rédaction</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Génère du contenu professionnel automatiquement avec l'IA</p>
+              </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white text-lg mb-2">Glisser-déposer</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Réorganise les sections facilement par glisser-déposer</p>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Glisser-déposer facile</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Réorganise les sections en un clic</p>
-              </div>
-            </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white text-lg mb-2">Export PDF/DOCX</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Télécharge ton CV en PDF ou DOCX instantanément</p>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Exporter en un clic</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Télécharge en PDF ou DOCX instantanément</p>
+
+              <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white text-lg mb-2">Mode clair/sombre</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Travaille avec le thème qui te convient le mieux</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Témoignages Section */}
-        <section id="temoignages" className="container mx-auto px-6 py-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-10">Témoignages</h2>
+        {/* Section Témoignages */}
+        <section id="temoignages" className="container mx-auto px-6 py-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                Ce qu'ils en disent
+              </span>
+            </h2>
+          </div>
           
-          <div className="max-w-3xl">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-2xl p-8 text-white">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-2xl">
+                  👨‍💼
                 </div>
                 <div className="flex-1">
-                  <p className="text-lg italic mb-4">
-                    "Grâce à CVtor, j'ai décroché mon premier job !"
+                  <p className="text-lg italic mb-2">
+                    "Grâce à CVtor, j'ai décroché mon premier job en 2 semaines !"
                   </p>
-                  <button className="px-6 py-2 bg-white/20 hover:bg-white/30 rounded-lg backdrop-blur-sm">
-                    Commencer maintenant
-                  </button>
+                  <p className="text-sm text-white/80">— Amadou K.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-orange-500 to-pink-500 rounded-2xl p-8 text-white">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-2xl">
+                  👩‍💻
+                </div>
+                <div className="flex-1">
+                  <p className="text-lg italic mb-2">
+                    "L'IA a vraiment transformé mon CV. Super outil !"
+                  </p>
+                  <p className="text-sm text-white/80">— Marie D.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl p-8 text-white">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-2xl">
+                  👨‍🎓
+                </div>
+                <div className="flex-1">
+                  <p className="text-lg italic mb-2">
+                    "Simple, rapide et professionnel. Je recommande !"
+                  </p>
+                  <p className="text-sm text-white/80">— Ibrahim S.</p>
                 </div>
               </div>
             </div>
@@ -266,16 +346,51 @@ export default function HomePage() {
 
         {/* Footer */}
         <footer id="footer" className="border-t border-gray-200 dark:border-gray-800 mt-12">
-          <div className="container mx-auto px-6 py-8">
-            <div className="flex flex-wrap justify-between items-center gap-4">
-              <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-                <a href="#" className="hover:text-gray-900 dark:hover:text-white">À propos</a>
-                <a href="#" className="hover:text-gray-900 dark:hover:text-white">CGU</a>
-                <a href="#" className="hover:text-gray-900 dark:hover:text-white">Confidentialité</a>
-                <a href="#" className="hover:text-gray-900 dark:hover:text-white">Contact</a>
+          <div className="container mx-auto px-6 py-12">
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent">CVtor</span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Ton CV. Ton style. En un clic.
+                </p>
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-500">
-                © 2025 CVtor · Intégrera par Assistant Service
+              
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Produit</h4>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <li><Link href="/modeles" className="hover:text-indigo-600 dark:hover:text-indigo-400">Modèles</Link></li>
+                  <li><Link href="/tarifs" className="hover:text-indigo-600 dark:hover:text-indigo-400">Tarifs</Link></li>
+                  <li><Link href="#ia" className="hover:text-indigo-600 dark:hover:text-indigo-400">Fonctionnalités</Link></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Entreprise</h4>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">À propos</a></li>
+                  <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Légal</h4>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">CGU</a></li>
+                  <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Confidentialité</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                © 2025 CVtor – Imaginé par Akemar Service 💡
               </p>
             </div>
           </div>
