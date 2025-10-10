@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["gitFull", "libxcrypt", "playwright-driver"]
+packages = ["chromium", "fontconfig", "ghostscript", "gitFull", "glib", "harfbuzz", "libxcrypt", "pango", "playwright-driver"]
 
 [workflows]
 runButton = "Project"
@@ -53,6 +53,10 @@ externalPort = 80
 [[ports]]
 localPort = 8000
 externalPort = 8000
+
+[[ports]]
+localPort = 34545
+externalPort = 5000
 
 [[ports]]
 localPort = 36625

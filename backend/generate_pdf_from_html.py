@@ -1,38 +1,37 @@
 #!/usr/bin/env python3
 """
-Convertit un fichier HTML en PDF via Playwright (Chromium).
+Convertit un fichier HTML en PDF via WeasyPrint.
 Usage:
   python generate_pdf_from_html.py --html cv.html --out CV.pdf
 """
 import argparse
-import asyncio
 from pathlib import Path
-from playwright.async_api import async_playwright
+from weasyprint import HTML
 
 
-async def html_to_pdf(html_path: Path, out_pdf: Path) -> Path:
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        try:
-            await page.goto(f"file://{html_path.absolute()}", wait_until="networkidle")
-            await page.wait_for_timeout(500)
-            # cacher le bouton pdf s'il existe
-            await page.evaluate("""
-              const pdfButton = document.querySelector('.pdf-button-container');
-              if (pdfButton) pdfButton.style.display = 'none';
-            """)
-            await page.pdf(
-                path=str(out_pdf),
-                format="A4",
-                print_background=True,
-                margin={"top": "0mm", "right": "0mm", "bottom": "0mm", "left": "0mm"},
-                prefer_css_page_size=True,
-                display_header_footer=False,
-            )
-            return out_pdf
-        finally:
-            await browser.close()
+def html_to_pdf(html_path: Path, out_pdf: Path) -> Path:
+    """Convertit un fichier HTML en PDF en utilisant WeasyPrint"""
+    print(f"[PDF Generator] Converting HTML to PDF using WeasyPrint")
+    print(f"[PDF Generator] Input: {html_path}")
+    print(f"[PDF Generator] Output: {out_pdf}")
+    
+    # Lire le HTML
+    html_content = html_path.read_text(encoding='utf-8')
+    
+    # Cacher le bouton PDF dans le HTML avant de générer
+    html_content = html_content.replace(
+        '<div class="pdf-button-container">',
+        '<div class="pdf-button-container" style="display: none !important;">'
+    )
+    
+    # Générer le PDF avec WeasyPrint
+    HTML(string=html_content, base_url=str(html_path.parent)).write_pdf(
+        str(out_pdf),
+        presentational_hints=True
+    )
+    
+    print(f"[PDF Generator] PDF created successfully: {out_pdf}")
+    return out_pdf
 
 
 def main():
@@ -46,7 +45,7 @@ def main():
     if not html.exists():
         raise FileNotFoundError(f"HTML introuvable: {html}")
 
-    pdf_path = asyncio.run(html_to_pdf(html, out))
+    pdf_path = html_to_pdf(html, out)
     print(f"PDF généré: {pdf_path}")
 
 

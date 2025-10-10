@@ -138,14 +138,32 @@ def preview_html(req: PreviewRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/export/pdf")
-async def export_pdf(req: ExportRequest):
+def export_pdf(req: ExportRequest):
+    import uuid
+    import re
+    
     try:
+        # Générer un ID unique pour cette requête
+        request_id = str(uuid.uuid4())
+        
+        # Rendre le HTML
         html = render_html(req.template_name, req.data)
-        tmp_html = BASE_DIR / "_tmp_render.html"
+        
+        # Fichier HTML temp unique
+        tmp_html = BASE_DIR / f"_tmp_render_{request_id}.html"
         tmp_html.write_text(html, encoding="utf-8")
 
-        out_pdf = BASE_DIR / (req.out or "CV_preview.pdf")
-        await html_to_pdf(tmp_html, out_pdf)
+        # Toujours générer un nom de fichier unique (ignorer req.out pour la sécurité)
+        # Cela empêche les collisions et les fuites de données entre utilisateurs
+        safe_filename = f"CV_{request_id}.pdf"
+        
+        # Construire le chemin de sortie sécurisé (toujours dans BASE_DIR)
+        out_pdf = BASE_DIR / safe_filename
+        
+        # Générer le PDF
+        html_to_pdf(tmp_html, out_pdf)
+        
+        # Nettoyer le fichier temp
         tmp_html.unlink(missing_ok=True)
 
         url = f"/static/{out_pdf.name}" if out_pdf.exists() else None
@@ -154,6 +172,9 @@ async def export_pdf(req: ExportRequest):
         import traceback
         error_detail = f"{str(e)}\n{traceback.format_exc()}"
         print(f"PDF export error: {error_detail}")
+        # Nettoyer en cas d'erreur
+        if 'tmp_html' in locals():
+            tmp_html.unlink(missing_ok=True)
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/export/docx")
