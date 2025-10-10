@@ -16,23 +16,33 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Updates
 
-### October 10, 2025 - Refonte de la page d'accueil
+### October 10, 2025 - Refonte et améliorations de la page d'accueil + Fix export PDF
 
-**🎨 Nouvelle page d'accueil redesignée:**
+**🎨 Page d'accueil améliorée:**
+- ✂️ **Espacements réduits** - Passage de py-20 à py-12/py-16 pour une page moins vide et plus compacte
+- 🖼️ **Miniatures de CV réelles** - 4 aperçus visuels des templates (Classique, Moderne, Professional, Tokyo) avec couleurs distinctives
+- ✨ **Élégance améliorée** - Titres avec dégradés de texte, effets hover (scale-105, shadow-2xl), descriptions enrichies
 - 🌓 **Mode clair/sombre** - Toggle pour basculer entre les thèmes avec Tailwind dark mode
 - 🧭 **Navigation moderne** - Barre de navigation avec logo CVtor, menu (Modèles, IA, Tarifs, Contact) et bouton Connexion
 - 🎯 **Section Hero** - Titre accrocheur "Crée ton CV professionnel en quelques clics" avec illustration de document
-- 📋 **Section Modèles** - Présentation de 3 templates avec cartes cliquables
-- ⚡ **Section Fonctionnalités** - Mise en avant des fonctionnalités clés avec icônes
+- 📋 **Section Modèles** - Présentation de 4 templates avec cartes cliquables et miniatures visuelles
+- ⚡ **Section Fonctionnalités** - Mise en avant des fonctionnalités clés avec icônes et descriptions
 - 💬 **Section Témoignages** - Citation utilisateur avec design gradient
 - 🔗 **Footer** - Liens vers À propos, CGU, Confidentialité, Contact
 - 📱 **Design responsive** - Adapté aux mobiles et tablettes
+
+**🐛 Correction export PDF:**
+- 🔧 **Fix Google Fonts** - Extraction des @import CSS et conversion en <link> tags pour compatibilité avec Playwright
+- 📝 **Logging amélioré** - Ajout de traceback détaillé pour debugging des erreurs d'export
+- ✅ **Export PDF fonctionnel** - Les Google Fonts se chargent maintenant correctement dans les PDF générés
 
 **🛠️ Améliorations techniques:**
 - Configuration Tailwind avec `darkMode: 'class'` pour support du thème sombre
 - Utilisation de composants React avec hooks (useState) pour la gestion du thème
 - Navigation par ancres vers les sections de la page
 - Dégradés et effets visuels modernes avec Tailwind CSS
+- Regex pour extraire et traiter les @import statements dans les CSS
+- Génération PDF compatible avec les fonts externes via <link> tags
 
 ### October 9, 2025
 
