@@ -43,15 +43,15 @@ export default function HomePage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="container mx-auto px-6 py-20">
+        <section className="container mx-auto px-6 py-12">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6 leading-tight">
                 Crée ton CV<br />
                 professionnel<br />
                 en quelques clics
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
                 CVtor t'aide à rédiger, structurer et styliser ton CV en un instant.
               </p>
               <div className="flex gap-4">
@@ -101,57 +101,104 @@ export default function HomePage() {
         </section>
 
         {/* Modèles Section */}
-        <section id="modeles" className="container mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Modèles</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-12">
+        <section id="modeles" className="container mx-auto px-6 py-16 bg-gray-50 dark:bg-gray-900/50">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-3">Modèles</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-10">
             Explore de modèles créatifs et prêts à l'emploi
           </p>
           
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* Template Classique */}
+            <Link href="/editor" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <div className="aspect-[3/4] bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 p-4 relative">
+                  <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="h-2 bg-amber-600 rounded w-3/4 mb-2"></div>
+                    <div className="h-1.5 bg-amber-400 rounded w-1/2 mb-3"></div>
+                    <div className="space-y-1.5">
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-4/6"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Classique</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Élégant et intemporel</p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Évolution</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">rapide par IA</p>
-              <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Essayer ce modèle
-              </button>
-            </div>
+            </Link>
 
-            <div className="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+            {/* Template Moderne */}
+            <Link href="/editor" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <div className="aspect-[3/4] bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-4 relative">
+                  <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="h-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded w-3/4 mb-2"></div>
+                    <div className="h-1.5 bg-gradient-to-r from-indigo-400 to-purple-400 rounded w-1/2 mb-3"></div>
+                    <div className="space-y-1.5">
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-4/6"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Moderne</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Créatif et dynamique</p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Glisser déposer</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">facile</p>
-              <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Essayer ce modèle
-              </button>
-            </div>
+            </Link>
 
-            <div className="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                </svg>
+            {/* Template Professional */}
+            <Link href="/editor" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <div className="aspect-[3/4] bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-4 relative">
+                  <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm flex gap-2">
+                    <div className="w-8 h-8 bg-teal-600 rounded-full flex-shrink-0"></div>
+                    <div className="flex-1">
+                      <div className="h-1.5 bg-teal-600 rounded w-3/4 mb-1"></div>
+                      <div className="h-1 bg-teal-400 rounded w-1/2 mb-2"></div>
+                      <div className="space-y-1">
+                        <div className="h-0.5 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                        <div className="h-0.5 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Professional</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Sobre et efficace</p>
+                </div>
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Export de</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">cinématique</p>
-              <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Essayer ce modèle
-              </button>
-            </div>
+            </Link>
+
+            {/* Template Tokyo */}
+            <Link href="/editor" className="group">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <div className="aspect-[3/4] bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900/20 dark:to-blue-900/20 p-4 relative">
+                  <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="h-2 bg-slate-700 dark:bg-slate-500 rounded w-3/4 mb-2"></div>
+                    <div className="h-1.5 bg-slate-500 dark:bg-slate-400 rounded w-1/2 mb-3"></div>
+                    <div className="space-y-1.5">
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
+                      <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-4/6"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Tokyo</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Minimaliste et épuré</p>
+                </div>
+              </div>
+            </Link>
           </div>
         </section>
 
         {/* Fonctionnalités Section */}
-        <section id="fonctionnalites" className="container mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">Fonctionnalités</h2>
+        <section id="fonctionnalites" className="container mx-auto px-6 py-16">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-10">Fonctionnalités</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex items-start gap-4">
@@ -162,6 +209,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Rédaction assistée par IA</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Génère du contenu professionnel automatiquement</p>
               </div>
             </div>
 
@@ -173,6 +221,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Glisser-déposer facile</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Réorganise les sections en un clic</p>
               </div>
             </div>
 
@@ -184,14 +233,15 @@ export default function HomePage() {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Exporter en un clic</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Télécharge en PDF ou DOCX instantanément</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Témoignages Section */}
-        <section id="temoignages" className="container mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">Témoignages</h2>
+        <section id="temoignages" className="container mx-auto px-6 py-16">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-10">Témoignages</h2>
           
           <div className="max-w-3xl">
             <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
@@ -215,7 +265,7 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer id="footer" className="border-t border-gray-200 dark:border-gray-800 mt-20">
+        <footer id="footer" className="border-t border-gray-200 dark:border-gray-800 mt-12">
           <div className="container mx-auto px-6 py-8">
             <div className="flex flex-wrap justify-between items-center gap-4">
               <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">

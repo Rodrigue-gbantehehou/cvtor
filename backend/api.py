@@ -69,6 +69,20 @@ def render_html(template_name: str, data: Dict[str, Any]) -> str:
     css_path = TEMPLATES_DIR / template_folder / "style.css"
     css_content = css_path.read_text(encoding="utf-8") if css_path.exists() else ""
 
+    # Extract @import statements from CSS and convert to <link> tags
+    import re
+    font_links = []
+    css_without_imports = css_content
+    
+    # Find all @import url(...) statements
+    import_pattern = r"@import\s+url\(['\"]?([^'\"]+)['\"]?\);"
+    imports = re.findall(import_pattern, css_content)
+    for url in imports:
+        font_links.append(f'<link rel="stylesheet" href="{url}" />')
+    
+    # Remove @import statements from CSS
+    css_without_imports = re.sub(import_pattern, '', css_content)
+
     # Load template metadata for rendering
     template_json_path = TEMPLATES_DIR / template_folder / "template.json"
     template_metadata = {}
@@ -77,12 +91,14 @@ def render_html(template_name: str, data: Dict[str, Any]) -> str:
         template_metadata = json.loads(template_json_path.read_text(encoding="utf-8"))
 
     html_body = template.render(data=data, template=template_metadata)
+    font_links_html = '\n  '.join(font_links)
     html_full = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <title>CV Preview</title>
-  <style>{css_content}</style>
+  {font_links_html}
+  <style>{css_without_imports}</style>
 </head>
 <body>
 {html_body}
@@ -135,6 +151,9 @@ async def export_pdf(req: ExportRequest):
         url = f"/static/{out_pdf.name}" if out_pdf.exists() else None
         return {"file": str(out_pdf), "url": url}
     except Exception as e:
+        import traceback
+        error_detail = f"{str(e)}\n{traceback.format_exc()}"
+        print(f"PDF export error: {error_detail}")
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/export/docx")
