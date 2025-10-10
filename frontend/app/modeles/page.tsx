@@ -7,6 +7,7 @@ export default function ModelesPage() {
   const [isDark, setIsDark] = useState(true)
   const [categoryFilter, setCategoryFilter] = useState('tous')
   const [colorFilter, setColorFilter] = useState('tous')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const templates = [
     { 
@@ -100,9 +101,9 @@ export default function ModelesPage() {
   return (
     <div className={isDark ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-[#0f1420] transition-colors">
-        {/* Navbar */}
+        {/* Navbar responsive */}
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0f1420]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-          <div className="container mx-auto px-6 py-4">
+          <div className="container mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center">
@@ -128,12 +129,53 @@ export default function ModelesPage() {
                   Créer un CV
                 </Link>
               </div>
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
             </div>
+
+            {/* Mobile menu dropdown */}
+            {mobileMenuOpen && (
+              <div className="md:hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 space-y-2">
+                <Link href="/modeles" className="block px-4 py-2 text-indigo-600 dark:text-indigo-400 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  Modèles
+                </Link>
+                <Link href="/#ia" className="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  IA
+                </Link>
+                <Link href="/tarifs" className="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  Tarifs
+                </Link>
+                <Link href="/#footer" className="block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                  Contact
+                </Link>
+                <button 
+                  onClick={() => setIsDark(!isDark)}
+                  className="w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  {isDark ? '🌞 Mode clair' : '🌙 Mode sombre'}
+                </button>
+                <Link href="/editor" className="block px-4 py-2 text-center bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
+                  Créer un CV
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
 
         <div className="pt-24 pb-12">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             {/* En-tête */}
             <div className="text-center mb-12">
               <h1 className="text-5xl md:text-6xl font-bold mb-4">
