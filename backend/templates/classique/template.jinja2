@@ -44,103 +44,146 @@
     </div>
   </header>
 
-  <!-- Contenu principal -->
-  <div class="main-content">
-    <!-- Résumé / À propos -->
-    {% if data.summary %}
-    <section class="section">
-      <h3 class="section-title"><i class="fas fa-user"></i> RÉSUMÉ</h3>
-      <p class="about-text">{{ data.summary }}</p>
-    </section>
-    {% endif %}
+  <!-- Résumé / À propos (pleine largeur) -->
+  {% if data.summary %}
+  <section class="section summary-section">
+    <h3 class="section-title"><i class="fas fa-user"></i> RÉSUMÉ</h3>
+    <p class="about-text">{{ data.summary }}</p>
+  </section>
+  {% endif %}
 
-    <!-- Expériences Professionnelles -->
-    {% if data.experience %}
-    <section class="section">
-      <h3 class="section-title"><i class="fas fa-briefcase"></i> EXPÉRIENCES PROFESSIONNELLES</h3>
-      <div class="timeline">
-        {% for exp in data.experience %}
-        <div class="timeline-item">
-          {% if exp.dates or (exp.start and exp.end) %}
-          <div class="timeline-date">{{ exp.dates | default(exp.start ~ ' - ' ~ exp.end) }}</div>
-          {% endif %}
-          <div class="timeline-content">
-            {% if exp.position or exp.role %}
-            <h4>{{ exp.position | default(exp.role) }}</h4>
+  <!-- Contenu principal avec disposition adaptative -->
+  {% set has_left_content = (data.skills and data.skills.groups) or data.languages %}
+  <div class="main-content{% if has_left_content %} two-columns{% endif %}">
+    <!-- Colonne gauche : Compétences et Langues (seulement si présentes) -->
+    {% if has_left_content %}
+    <div class="left-column">
+      <!-- Compétences -->
+      {% if data.skills and data.skills.groups %}
+      <section class="section">
+        <h3 class="section-title"><i class="fas fa-tools"></i> COMPÉTENCES</h3>
+        <div class="skills-grid">
+          {% for group in data.skills.groups %}
+          <div class="skill-category">
+            {% if group.label %}
+            <h4>{{ group.label }}</h4>
             {% endif %}
-            {% if exp.company %}
-            <h5>{{ exp.company }}</h5>
-            {% endif %}
-            {% if exp.tasks or exp.bullets %}
-            <ul>
-              {% for task in exp.tasks | default(exp.bullets) %}
-              <li>{{ task }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
+            {% for skill in group["items"] | default([]) %}
+            <div class="skill-item"><span>{{ skill }}</span></div>
+            {% endfor %}
           </div>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
-
-    <!-- Formation -->
-    {% if data.education %}
-    <section class="section">
-      <h3 class="section-title"><i class="fas fa-graduation-cap"></i> FORMATION</h3>
-      <div class="timeline">
-        {% for edu in data.education %}
-        <div class="timeline-item">
-          {% if edu.dates or edu.year %}
-          <div class="timeline-date">{{ edu.dates | default(edu.year) }}</div>
-          {% endif %}
-          <div class="timeline-content">
-            {% if edu.degree %}
-            <h4>{{ edu.degree }}</h4>
-            {% endif %}
-            {% if edu.institution or edu.school %}
-            <h5>{{ edu.institution | default(edu.school) }}</h5>
-            {% endif %}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
-
-    <!-- Compétences -->
-    {% if data.skills and data.skills.groups %}
-    <section class="section">
-      <h3 class="section-title"><i class="fas fa-tools"></i> COMPÉTENCES</h3>
-      <div class="skills-grid">
-        {% for group in data.skills.groups %}
-        <div class="skill-category">
-          {% if group.label %}
-          <h4>{{ group.label }}</h4>
-          {% endif %}
-          {% for skill in group["items"] | default([]) %}
-          <div class="skill-item"><span>{{ skill }}</span></div>
           {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-    </section>
+      </section>
+      {% endif %}
+
+      <!-- Langues -->
+      {% if data.languages %}
+      <section class="section">
+        <h3 class="section-title"><i class="fas fa-language"></i> LANGUES</h3>
+        <div class="skills-grid">
+          {% for lang in data.languages %}
+          <div class="skill-item">
+            <span><strong>{{ lang.name }}:</strong> {{ lang.level }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+    </div>
     {% endif %}
 
-    <!-- Langues -->
-    {% if data.languages %}
-    <section class="section">
-      <h3 class="section-title"><i class="fas fa-language"></i> LANGUES</h3>
-      <div class="skills-grid">
-        {% for lang in data.languages %}
-        <div class="skill-item">
-          <span><strong>{{ lang.name }}:</strong> {{ lang.level }}</span>
+    <!-- Colonne droite : Expériences et Formation -->
+    <div class="right-column">
+      <!-- Expériences Professionnelles -->
+      {% if data.experience %}
+      <section class="section">
+        <h3 class="section-title"><i class="fas fa-briefcase"></i> EXPÉRIENCES</h3>
+        <div class="timeline">
+          {% for exp in data.experience %}
+          <div class="timeline-item">
+            {% if exp.dates or (exp.start and exp.end) %}
+            <div class="timeline-date">{{ exp.dates | default(exp.start ~ ' - ' ~ exp.end) }}</div>
+            {% endif %}
+            <div class="timeline-content">
+              {% if exp.position or exp.role %}
+              <h4>{{ exp.position | default(exp.role) }}</h4>
+              {% endif %}
+              {% if exp.company %}
+              <h5>{{ exp.company }}</h5>
+              {% endif %}
+              {% if exp.tasks or exp.bullets %}
+              <ul>
+                {% for task in exp.tasks | default(exp.bullets) %}
+                <li>{{ task }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
+      </section>
+      {% endif %}
+
+      <!-- Formation -->
+      {% if data.education %}
+      <section class="section">
+        <h3 class="section-title"><i class="fas fa-graduation-cap"></i> FORMATION</h3>
+        <div class="timeline">
+          {% for edu in data.education %}
+          <div class="timeline-item">
+            {% if edu.dates or edu.year %}
+            <div class="timeline-date">{{ edu.dates | default(edu.year) }}</div>
+            {% endif %}
+            <div class="timeline-content">
+              {% if edu.degree %}
+              <h4>{{ edu.degree }}</h4>
+              {% endif %}
+              {% if edu.institution or edu.school %}
+              <h5>{{ edu.institution | default(edu.school) }}</h5>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Compétences et Langues en bas si pas de colonne gauche -->
+      {% if not has_left_content %}
+        {% if data.skills and data.skills.groups %}
+        <section class="section">
+          <h3 class="section-title"><i class="fas fa-tools"></i> COMPÉTENCES</h3>
+          <div class="skills-grid">
+            {% for group in data.skills.groups %}
+            <div class="skill-category">
+              {% if group.label %}
+              <h4>{{ group.label }}</h4>
+              {% endif %}
+              {% for skill in group["items"] | default([]) %}
+              <div class="skill-item"><span>{{ skill }}</span></div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        {% if data.languages %}
+        <section class="section">
+          <h3 class="section-title"><i class="fas fa-language"></i> LANGUES</h3>
+          <div class="skills-grid">
+            {% for lang in data.languages %}
+            <div class="skill-item">
+              <span><strong>{{ lang.name }}:</strong> {{ lang.level }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+      {% endif %}
+    </div>
   </div>
 </div>
 

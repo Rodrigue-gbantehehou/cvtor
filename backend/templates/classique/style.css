@@ -104,17 +104,36 @@ body {
   width: 18px;
 }
 
+/* Section résumé pleine largeur */
+.summary-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* Contenu principal adaptatif */
 .main-content {
+  /* Par défaut, une seule colonne pleine largeur */
+  display: block;
+}
+
+/* Quand il y a du contenu dans la colonne gauche, passer en deux colonnes */
+.main-content.two-columns {
   display: flex;
   gap: 40px;
 }
 
-.left-column {
+.main-content.two-columns .left-column {
   flex: 0 0 35%;
 }
 
-.right-column {
+.main-content.two-columns .right-column {
   flex: 1;
+}
+
+/* En mode single column, la colonne droite prend toute la largeur */
+.main-content:not(.two-columns) .right-column {
+  width: 100%;
 }
 
 .section {
@@ -125,19 +144,20 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #1a1a1a;
-  margin-bottom: 25px;
-  padding-bottom: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 2px solid #d4af37;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
   font-family: 'Playfair Display', 'Georgia', serif;
 }
 
 .section-title i {
   font-size: 18px;
+  color: #d4af37;
 }
 
 .about-text {
@@ -149,11 +169,11 @@ body {
 
 .skills-grid {
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
 .skill-category h4 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 10px;
@@ -206,21 +226,24 @@ body {
 }
 
 .timeline-content h4 {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 5px;
 }
 
 .timeline-content h5 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #666;
   margin-bottom: 10px;
 }
 
-.timeline-content li {
+.timeline-content ul {
   margin-left: 20px;
+}
+
+.timeline-content li {
   margin-bottom: 6px;
   font-size: 14px;
   color: #444;
@@ -254,6 +277,19 @@ body {
   background: #c29d2d;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(212,175,55,0.4);
+}
+
+/* Mode responsive pour petits écrans */
+@media screen and (max-width: 768px) {
+  .main-content.two-columns {
+    display: block;
+  }
+
+  .main-content.two-columns .left-column,
+  .main-content.two-columns .right-column {
+    width: 100%;
+    flex: none;
+  }
 }
 
 @media print {
