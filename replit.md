@@ -14,7 +14,27 @@ The application consists of:
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Updates (October 9, 2025)
+## Recent Updates
+
+### October 10, 2025 - Refonte de la page d'accueil
+
+**🎨 Nouvelle page d'accueil redesignée:**
+- 🌓 **Mode clair/sombre** - Toggle pour basculer entre les thèmes avec Tailwind dark mode
+- 🧭 **Navigation moderne** - Barre de navigation avec logo CVtor, menu (Modèles, IA, Tarifs, Contact) et bouton Connexion
+- 🎯 **Section Hero** - Titre accrocheur "Crée ton CV professionnel en quelques clics" avec illustration de document
+- 📋 **Section Modèles** - Présentation de 3 templates avec cartes cliquables
+- ⚡ **Section Fonctionnalités** - Mise en avant des fonctionnalités clés avec icônes
+- 💬 **Section Témoignages** - Citation utilisateur avec design gradient
+- 🔗 **Footer** - Liens vers À propos, CGU, Confidentialité, Contact
+- 📱 **Design responsive** - Adapté aux mobiles et tablettes
+
+**🛠️ Améliorations techniques:**
+- Configuration Tailwind avec `darkMode: 'class'` pour support du thème sombre
+- Utilisation de composants React avec hooks (useState) pour la gestion du thème
+- Navigation par ancres vers les sections de la page
+- Dégradés et effets visuels modernes avec Tailwind CSS
+
+### October 9, 2025
 
 **✨ Nouvelles Fonctionnalités Implémentées:**
 - 🤖 **Intégration IA Gratuite Hugging Face** - Génération automatique de contenu professionnel pour CV avec Mistral-7B-Instruct-v0.2 (100% gratuit)
