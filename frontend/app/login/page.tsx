@@ -42,7 +42,18 @@ export default function LoginPage() {
         router.push('/dashboard')
       }
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Une erreur est survenue')
+      let errorMessage = 'Une erreur est survenue'
+      
+      if (err.response?.data?.detail) {
+        const detail = err.response.data.detail
+        if (typeof detail === 'string') {
+          errorMessage = detail
+        } else if (Array.isArray(detail)) {
+          errorMessage = detail.map((e: any) => e.msg || e.message).join(', ')
+        }
+      }
+      
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
