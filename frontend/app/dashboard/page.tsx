@@ -50,7 +50,7 @@ export default function DashboardPage() {
       const headers = { Authorization: `Bearer ${token}` }
       
       const [resumesRes, quotaRes] = await Promise.all([
-        axios.get(`${API_URL}/resumes`, { headers }),
+        axios.get(`${API_URL}/resumes/`, { headers }),
         axios.get(`${API_URL}/resumes/quota`, { headers })
       ])
 
