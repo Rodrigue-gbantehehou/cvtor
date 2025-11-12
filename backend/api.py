@@ -13,12 +13,19 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from export_docx import export_docx
 from generate_pdf_from_html import html_to_pdf
+from routes_auth import router as auth_router
+from routes_resumes import router as resumes_router
+from routes_stripe import router as stripe_router
 
 BASE_DIR = Path(__file__).parent.resolve()
 TEMPLATES_DIR = BASE_DIR / "templates"
 DATA_DIR = BASE_DIR / "data"
 
 app = FastAPI(title="CV Generator API", version="1.0.0")
+
+app.include_router(auth_router)
+app.include_router(resumes_router)
+app.include_router(stripe_router)
 
 # === CORS ===
 app.add_middleware(

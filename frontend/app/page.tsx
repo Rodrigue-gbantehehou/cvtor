@@ -36,10 +36,10 @@ export default function HomePage() {
                 >
                   {isDark ? '🌞' : '🌙'}
                 </button>
-                <Link href="/editor" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors">
+                <Link href="/login" className="px-4 py-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors">
                   Connexion
                 </Link>
-                <Link href="/editor" className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
+                <Link href="/login" className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
                   Créer un CV
                 </Link>
               </div>
@@ -80,7 +80,7 @@ export default function HomePage() {
                 >
                   {isDark ? '🌞 Mode clair' : '🌙 Mode sombre'}
                 </button>
-                <Link href="/editor" className="block px-4 py-2 text-center bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
+                <Link href="/login" className="block px-4 py-2 text-center bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-lg hover:from-indigo-700 hover:to-cyan-700 transition-all shadow-lg shadow-indigo-500/30">
                   Créer un CV
                 </Link>
               </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link 
-                  href="/editor" 
+                  href="/login" 
                   className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-xl hover:from-indigo-700 hover:to-cyan-700 font-medium shadow-xl shadow-indigo-500/30 hover:shadow-2xl transition-all text-center"
                 >
                   Commencer gratuitement
