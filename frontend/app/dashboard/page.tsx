@@ -50,7 +50,7 @@ export default function DashboardPage() {
       const headers = { Authorization: `Bearer ${token}` }
       
       const [resumesRes, quotaRes] = await Promise.all([
-        axios.get(`${API_URL}/resumes/`, { headers }),
+        axios.get(`${API_URL}/resumes`, { headers }),
         axios.get(`${API_URL}/resumes/quota`, { headers })
       ])
 
@@ -58,8 +58,6 @@ export default function DashboardPage() {
       setQuota(quotaRes.data)
     } catch (error) {
       console.error('Error fetching data:', error)
-      localStorage.removeItem('token')
-      router.push('/login')
     } finally {
       setLoading(false)
     }
