@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import supabase from '../../lib/supabaseClient'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -21,6 +22,10 @@ interface Quota {
   max_resumes: number | null
   can_create_more: boolean
 }
+const getToken = async () => {
+    const { data: { session } } = await supabase.auth.getSession()
+    return session?.access_token
+  }
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -30,7 +35,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     const userData = localStorage.getItem('user')
     
     if (!token) {

@@ -1,4 +1,4 @@
-// File: /home/runner/workspace/frontend/app/editor/page.tsx
+// File: C:\projets\perso\cvtor\frontend\app\editor\page.tsx
 import * as entry from '../../../../app/editor/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
