@@ -3,7 +3,6 @@
 
 # 🔒 Ignorer les fichiers d'environnement (variables secrètes)
 .env
-.env.local
 /frontend/.env
 /frontend/.env.local
 
