@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from database import get_db
-from models import User, SubscriptionPlan
-from auth import get_current_active_user
+from database.database import get_db
+from models.models import User, SubscriptionPlan
+from auth.auth import get_current_active_user
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")

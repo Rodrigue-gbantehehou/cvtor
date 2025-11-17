@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from database import engine, Base
-from models import User, Resume
+from models.models import User, Resume
 
 def init_db():
     print("Creating database tables...")

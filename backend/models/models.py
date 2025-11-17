@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from database import Base
+from database.database import Base
 import enum
 
 class SubscriptionPlan(str, enum.Enum):
