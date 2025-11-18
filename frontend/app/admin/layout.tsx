@@ -1,14 +1,14 @@
 import { Sidebar } from '@/components/admin/Sidebar';
 import { Header } from '@/components/admin/Header';
-import { createServerComponentClient } from '@/lib/supabaseClient';
 import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabaseClient';
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createServerComponentClient();
+  const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) {

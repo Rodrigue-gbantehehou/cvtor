@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import supabase from '../../lib/supabaseClient'
+import { supabase } from '@/lib/supabaseClient'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -34,21 +34,24 @@ export default function DashboardPage() {
   const [quota, setQuota] = useState<Quota | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const token = getToken()
-    const userData = localStorage.getItem('user')
-    
-    if (!token) {
+useEffect(() => {
+  const initialize = async () => {
+    try {
+      const token = await getToken()
+      if (!token) {
+        router.push('/login')
+        return
+      }
+      // Rest of your initialization code that uses the token
+      await fetchData(token)
+    } catch (error) {
+      console.error('Error initializing dashboard:', error)
       router.push('/login')
-      return
     }
+  }
 
-    if (userData) {
-      setUser(JSON.parse(userData))
-    }
-
-    fetchData(token)
-  }, [])
+  initialize()
+}, [router])  // Add any other dependencies here
 
   const fetchData = async (token: string) => {
     try {
