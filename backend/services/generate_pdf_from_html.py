@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-Convertit un fichier HTML en PDF via WeasyPrint.
+Convertit un fichier HTML en PDF via Playwright.
 Usage:
   python generate_pdf_from_html.py --html cv.html --out CV.pdf
 """
 import argparse
 from pathlib import Path
-from weasyprint import HTML
+from playwright.sync_api import sync_playwright
 
 
 def html_to_pdf(html_path: Path, out_pdf: Path) -> Path:
-    """Convertit un fichier HTML en PDF en utilisant WeasyPrint"""
-    print(f"[PDF Generator] Converting HTML to PDF using WeasyPrint")
+    """Convertit un fichier HTML en PDF en utilisant Playwright"""
+    print(f"[PDF Generator] Converting HTML to PDF using Playwright")
     print(f"[PDF Generator] Input: {html_path}")
     print(f"[PDF Generator] Output: {out_pdf}")
     
@@ -24,11 +24,13 @@ def html_to_pdf(html_path: Path, out_pdf: Path) -> Path:
         '<div class="pdf-button-container" style="display: none !important;">'
     )
     
-    # Générer le PDF avec WeasyPrint
-    HTML(string=html_content, base_url=str(html_path.parent)).write_pdf(
-        str(out_pdf),
-        presentational_hints=True
-    )
+    # Générer le PDF avec Playwright
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.set_content(html_content)
+        page.pdf(path=str(out_pdf), format='A4', print_background=True)
+        browser.close()
     
     print(f"[PDF Generator] PDF created successfully: {out_pdf}")
     return out_pdf

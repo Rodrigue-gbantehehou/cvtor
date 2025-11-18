@@ -22,26 +22,19 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 DATA_DIR = BASE_DIR / "data"
 
 app = FastAPI(title="CV Generator API", version="1.0.0")
-# Ajoutez ces imports en haut si ce n'est pas déjà fait
-from fastapi.middleware.cors import CORSMiddleware
-
-# Configurez CORS juste après la création de l'application
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Ajoutez l'URL de votre frontend
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.include_router(auth_router)
 app.include_router(resumes_router)
 app.include_router(stripe_router)
 
 # === CORS ===
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5000").split(",")
+if os.getenv("REPLIT_DEV_DOMAIN"):
+    allowed_origins.append(f"https://{os.getenv('REPLIT_DEV_DOMAIN')}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -197,9 +190,14 @@ def export_pdf(req: ExportRequest):
 
 @app.post("/export/docx")
 def export_docx_endpoint(req: ExportRequest):
+    import uuid
     try:
-        out_path = BASE_DIR / (req.out or "CV_preview.docx")
-        tmp_json = BASE_DIR / "_tmp_data.json"
+        # Generate unique filename to prevent path traversal
+        request_id = str(uuid.uuid4())
+        safe_filename = f"CV_{request_id}.docx"
+        out_path = BASE_DIR / safe_filename
+        
+        tmp_json = BASE_DIR / f"_tmp_data_{request_id}.json"
         tmp_json.write_text(json.dumps(req.data, ensure_ascii=False, indent=2), encoding="utf-8")
 
         export_docx(tmp_json, out_path)
@@ -208,6 +206,8 @@ def export_docx_endpoint(req: ExportRequest):
         url = f"/static/{out_path.name}" if out_path.exists() else None
         return {"file": str(out_path), "url": url}
     except Exception as e:
+        if 'tmp_json' in locals():
+            tmp_json.unlink(missing_ok=True)
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/generate")
