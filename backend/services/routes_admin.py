@@ -74,7 +74,10 @@ def verify_admin(current_user: User = Depends(get_current_user)):
     return current_user
 
 @router.get("/categories", response_model=List[CategoryResponse])
-def get_categories(db: Session = Depends(get_db)):
+def get_categories(
+    db: Session = Depends(get_db),
+    admin: User = Depends(verify_admin)
+):
     categories = db.query(Category).all()
     return categories
 
@@ -132,6 +135,7 @@ def delete_category(
 @router.get("/templates", response_model=List[TemplateResponse])
 def get_all_templates(
     db: Session = Depends(get_db),
+    admin: User = Depends(verify_admin),
     skip: int = 0,
     limit: int = 100
 ):
@@ -139,7 +143,11 @@ def get_all_templates(
     return templates
 
 @router.get("/templates/{template_id}", response_model=TemplateResponse)
-def get_template(template_id: int, db: Session = Depends(get_db)):
+def get_template(
+    template_id: int,
+    db: Session = Depends(get_db),
+    admin: User = Depends(verify_admin)
+):
     template = db.query(Template).filter(Template.id == template_id).first()
     if not template:
         raise HTTPException(status_code=404, detail="Template not found")

@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from database.database import get_db
 from models.models import Template, Category
 
-router = APIRouter(prefix="/api/templates", tags=["templates"])
+router = APIRouter(prefix="/api", tags=["public"])
 
 class CategoryResponse(BaseModel):
     id: int
@@ -30,7 +30,12 @@ class TemplatePublicResponse(BaseModel):
     class Config:
         from_attributes = True
 
-@router.get("/", response_model=List[TemplatePublicResponse])
+@router.get("/categories", response_model=List[CategoryResponse])
+def list_public_categories(db: Session = Depends(get_db)):
+    categories = db.query(Category).all()
+    return categories
+
+@router.get("/templates", response_model=List[TemplatePublicResponse])
 def list_public_templates(
     category_id: Optional[int] = None,
     db: Session = Depends(get_db)
@@ -41,7 +46,7 @@ def list_public_templates(
     templates = query.all()
     return templates
 
-@router.get("/{slug}", response_model=TemplatePublicResponse)
+@router.get("/templates/{slug}", response_model=TemplatePublicResponse)
 def get_template_by_slug(slug: str, db: Session = Depends(get_db)):
     template = db.query(Template).filter(
         Template.slug == slug,
@@ -52,7 +57,7 @@ def get_template_by_slug(slug: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Template not found")
     return template
 
-@router.get("/category/{category_slug}", response_model=List[TemplatePublicResponse])
+@router.get("/templates/category/{category_slug}", response_model=List[TemplatePublicResponse])
 def list_templates_by_category(category_slug: str, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.slug == category_slug).first()
     if not category:

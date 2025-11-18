@@ -1,101 +1,65 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
+interface Category {
+  id: number
+  name: string
+  slug: string
+  description?: string
+}
+
+interface Template {
+  id: number
+  title: string
+  slug: string
+  description?: string
+  price: number
+  thumbnail_url?: string
+  category?: Category
+  is_active: boolean
+}
 
 export default function ModelesPage() {
   const [isDark, setIsDark] = useState(true)
   const [categoryFilter, setCategoryFilter] = useState('tous')
-  const [colorFilter, setColorFilter] = useState('tous')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [templates, setTemplates] = useState<Template[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const templates = [
-    { 
-      id: 1, 
-      name: 'Classique', 
-      category: 'traditionnel', 
-      color: 'amber', 
-      description: 'Élégant et intemporel', 
-      gradient: 'from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20',
-      barColor: 'bg-amber-600',
-      barLight: 'bg-amber-400'
-    },
-    { 
-      id: 2, 
-      name: 'Moderne', 
-      category: 'créatif', 
-      color: 'indigo', 
-      description: 'Créatif et dynamique', 
-      gradient: 'from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20',
-      barColor: 'bg-indigo-600',
-      barLight: 'bg-indigo-400'
-    },
-    { 
-      id: 3, 
-      name: 'Professional', 
-      category: 'professionnel', 
-      color: 'cyan', 
-      description: 'Sobre et efficace', 
-      gradient: 'from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20',
-      barColor: 'bg-teal-600',
-      barLight: 'bg-teal-400'
-    },
-    { 
-      id: 4, 
-      name: 'Tokyo', 
-      category: 'minimaliste', 
-      color: 'slate', 
-      description: 'Minimaliste et épuré', 
-      gradient: 'from-slate-50 to-blue-50 dark:from-slate-900/20 dark:to-blue-900/20',
-      barColor: 'bg-slate-700 dark:bg-slate-500',
-      barLight: 'bg-slate-500 dark:bg-slate-400'
-    },
-    { 
-      id: 5, 
-      name: 'Créatif', 
-      category: 'créatif', 
-      color: 'pink', 
-      description: 'Audacieux et original', 
-      gradient: 'from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20',
-      barColor: 'bg-pink-600',
-      barLight: 'bg-pink-400'
-    },
-    { 
-      id: 6, 
-      name: 'Executive', 
-      category: 'professionnel', 
-      color: 'blue', 
-      description: 'Leadership et expérience', 
-      gradient: 'from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20',
-      barColor: 'bg-blue-600',
-      barLight: 'bg-blue-400'
-    },
-    { 
-      id: 7, 
-      name: 'Tech', 
-      category: 'créatif', 
-      color: 'emerald', 
-      description: 'Pour les développeurs', 
-      gradient: 'from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20',
-      barColor: 'bg-emerald-600',
-      barLight: 'bg-emerald-400'
-    },
-    { 
-      id: 8, 
-      name: 'Simple', 
-      category: 'minimaliste', 
-      color: 'gray', 
-      description: 'Épuré et direct', 
-      gradient: 'from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20',
-      barColor: 'bg-gray-600',
-      barLight: 'bg-gray-400'
-    },
-  ]
+  useEffect(() => {
+    fetchTemplates()
+    fetchCategories()
+  }, [])
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/templates`)
+      setTemplates(response.data)
+    } catch (error) {
+      console.error('Error fetching templates:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/categories`)
+      setCategories(response.data)
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
 
   const filteredTemplates = templates.filter(template => {
-    const categoryMatch = categoryFilter === 'tous' || template.category === categoryFilter
-    const colorMatch = colorFilter === 'tous' || template.color === colorFilter
-    return categoryMatch && colorMatch
+    const categoryMatch = categoryFilter === 'tous' || template.category?.slug === categoryFilter
+    return categoryMatch
   })
 
   return (
@@ -203,51 +167,17 @@ export default function ModelesPage() {
                       className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white"
                     >
                       <option value="tous">Tous</option>
-                      <option value="traditionnel">Traditionnel</option>
-                      <option value="professionnel">Professionnel</option>
-                      <option value="créatif">Créatif</option>
-                      <option value="minimaliste">Minimaliste</option>
+                      {categories.map((cat) => (
+                        <option key={cat.id} value={cat.slug}>
+                          {cat.name}
+                        </option>
+                      ))}
                     </select>
-                  </div>
-
-                  {/* Couleur */}
-                  <div className="mb-6">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">Couleur</label>
-                    <select 
-                      value={colorFilter}
-                      onChange={(e) => setColorFilter(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white"
-                    >
-                      <option value="tous">Toutes</option>
-                      <option value="indigo">Indigo</option>
-                      <option value="cyan">Cyan</option>
-                      <option value="amber">Orange</option>
-                      <option value="pink">Rose</option>
-                      <option value="blue">Bleu</option>
-                      <option value="emerald">Vert</option>
-                      <option value="gray">Gris</option>
-                    </select>
-                  </div>
-
-                  {/* Format */}
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">Format</label>
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" defaultChecked className="rounded text-indigo-600" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">A4</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" className="rounded text-indigo-600" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Letter</span>
-                      </label>
-                    </div>
                   </div>
 
                   <button 
                     onClick={() => {
                       setCategoryFilter('tous')
-                      setColorFilter('tous')
                     }}
                     className="w-full mt-6 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
@@ -262,36 +192,62 @@ export default function ModelesPage() {
                   {filteredTemplates.length} modèle{filteredTemplates.length > 1 ? 's' : ''} trouvé{filteredTemplates.length > 1 ? 's' : ''}
                 </div>
                 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredTemplates.map((template) => (
-                    <Link 
-                      key={template.id} 
-                      href={`/editor?template=${template.name.toLowerCase()}`}
-                      className="group"
-                    >
-                      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
-                        <div className={`aspect-[3/4] bg-gradient-to-br ${template.gradient} p-4 relative`}>
-                          <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                            <div className={`h-2 ${template.barColor} rounded w-3/4 mb-2`}></div>
-                            <div className={`h-1.5 ${template.barLight} rounded w-1/2 mb-3`}></div>
-                            <div className="space-y-1.5">
-                              <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded"></div>
-                              <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
-                              <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-4/6"></div>
+                {loading ? (
+                  <div className="text-center py-12">
+                    <p className="text-gray-600 dark:text-gray-400">Chargement des templates...</p>
+                  </div>
+                ) : (
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredTemplates.map((template) => (
+                      <Link 
+                        key={template.id} 
+                        href={`/editor?template=${template.slug}`}
+                        className="group"
+                      >
+                        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-indigo-500">
+                          {template.thumbnail_url ? (
+                            <div className="aspect-[3/4] relative">
+                              <img 
+                                src={`${API_URL}${template.thumbnail_url}`} 
+                                alt={template.title}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
+                          ) : (
+                            <div className="aspect-[3/4] bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-4 relative">
+                              <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                                <div className="h-2 bg-indigo-600 rounded w-3/4 mb-2"></div>
+                                <div className="h-1.5 bg-indigo-400 rounded w-1/2 mb-3"></div>
+                                <div className="space-y-1.5">
+                                  <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                                  <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
+                                  <div className="h-1 bg-gray-300 dark:bg-gray-600 rounded w-4/6"></div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          <div className="p-4">
+                            <div className="flex justify-between items-start mb-1">
+                              <h3 className="font-semibold text-gray-900 dark:text-white">{template.title}</h3>
+                              {template.price > 0 && (
+                                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{template.price}€</span>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{template.description || 'Template professionnel'}</p>
+                            {template.category && (
+                              <span className="inline-block text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded mb-3">
+                                {template.category.name}
+                              </span>
+                            )}
+                            <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                              Utiliser ce modèle
+                            </button>
                           </div>
                         </div>
-                        <div className="p-4">
-                          <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{template.name}</h3>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">{template.description}</p>
-                          <button className="w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                            Utiliser ce modèle
-                          </button>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
 
                 {filteredTemplates.length === 0 && (
                   <div className="text-center py-12">
