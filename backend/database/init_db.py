@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-from database import engine, Base
-from models.models import User, Resume
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from database.database import engine, Base
+from models.models import User, Resume, Template, Category
 
 def init_db():
     print("Creating database tables...")
