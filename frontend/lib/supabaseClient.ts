@@ -1,22 +1,16 @@
-// lib/supabaseClient.ts
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient } from '@supabase/ssr';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  throw new Error("Missing Supabase env variables");
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
 }
 
-// Validate that URL and key are not swapped
-if (!SUPABASE_URL.startsWith('http')) {
-  throw new Error("NEXT_PUBLIC_SUPABASE_URL semble contenir une clé au lieu d'une URL. Vérifiez vos secrets Replit - les valeurs sont probablement inversées.");
+// Create a single supabase client for client-side use
+export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
+
+// Client helper function for consistency
+export function createClient() {
+  return supabase;
 }
-
-if (!SUPABASE_ANON_KEY.startsWith('eyJ')) {
-  throw new Error("NEXT_PUBLIC_SUPABASE_ANON_KEY semble contenir une URL au lieu d'une clé. Vérifiez vos secrets Replit - les valeurs sont probablement inversées.");
-}
-
-const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-export default supabase;

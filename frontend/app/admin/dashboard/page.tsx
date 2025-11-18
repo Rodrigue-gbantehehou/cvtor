@@ -1,17 +1,31 @@
-import { StatsCards } from '@/components/admin/StatsCards'
-import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { StatsCards } from '@/components/admin/StatsCards';
+import { Card } from '@/components/admin/ui/Card';
+import { Button } from "@/components/admin/ui/Button";
+import { getDashboardStats } from '@/lib/services/adminService';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const stats = await getDashboardStats();
+
+  // Fonction pour formater la date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('fr-FR', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Tableau de bord Admin</h1>
           <p className="text-gray-600 mt-2">Bienvenue sur votre panel d'administration</p>
         </div>
-        <Button>Générer Rapport</Button>
+        <Button>Générer un rapport</Button>
       </div>
 
       {/* Statistiques */}
@@ -19,41 +33,61 @@ export default function DashboardPage() {
 
       {/* Contenu principal */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Activité récente */}
+        {/* Derniers utilisateurs */}
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Activité Récente</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Derniers utilisateurs</h2>
+            <Button variant="outline" size="sm">Voir tout</Button>
+          </div>
           <div className="space-y-4">
-            {[
-              { action: 'Nouveau template créé', user: 'John Doe', time: 'Il y a 2 min' },
-              { action: 'Template modifié', user: 'Jane Smith', time: 'Il y a 15 min' },
-              { action: 'Utilisateur inscrit', user: 'Mike Johnson', time: 'Il y a 1 heure' },
-              { action: 'Catégorie ajoutée', user: 'Sarah Wilson', time: 'Il y a 2 heures' },
-            ].map((activity, index) => (
-              <div key={index} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                  <p className="text-xs text-gray-500">par {activity.user}</p>
+            {stats.recentUsers.map((user) => (
+              <div key={user.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium">
+                  {user.profile?.full_name?.charAt(0) || 'U'}
                 </div>
-                <span className="text-xs text-gray-400">{activity.time}</span>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">{user.profile?.full_name || 'Utilisateur sans nom'}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
+                </div>
+                <span className="text-xs text-gray-400">
+                  {formatDate(user.created_at)}
+                </span>
               </div>
             ))}
           </div>
         </Card>
 
-        {/* Performances */}
+        {/* Derniers exports */}
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Performances</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Derniers exports</h2>
+            <Button variant="outline" size="sm">Voir tout</Button>
+          </div>
           <div className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-600">Taux de conversion</span>
-                <span className="font-medium text-gray-900">68%</span>
+            {stats.recentExports.map((exp) => (
+              <div key={exp.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  exp.status === 'done' ? 'bg-green-100 text-green-600' :
+                  exp.status === 'failed' ? 'bg-red-100 text-red-600' :
+                  'bg-yellow-100 text-yellow-600'
+                }`}>
+                  {exp.format.toUpperCase()}
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">
+                    {exp.resume?.title || 'CV sans titre'}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {exp.status === 'done' ? 'Export réussi' :
+                     exp.status === 'failed' ? 'Échec de l\'export' :
+                     'En cours de traitement'}
+                  </p>
+                </div>
+                <span className="text-xs text-gray-400">
+                  {formatDate(exp.created_at)}
+                </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: '68%' }}></div>
-              </div>
-            </div>
+            ))}
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-gray-600">Templates vendus</span>
