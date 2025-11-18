@@ -16,6 +16,7 @@ from services.generate_pdf_from_html import html_to_pdf
 from auth.routes_auth import router as auth_router
 from services.routes_resumes import router as resumes_router
 from services.routes_stripe import router as stripe_router
+from services.routes_fedapay import router as fedapay_router
 
 BASE_DIR = Path(__file__).parent.resolve()
 TEMPLATES_DIR = BASE_DIR / "templates"
@@ -26,6 +27,7 @@ app = FastAPI(title="CV Generator API", version="1.0.0")
 app.include_router(auth_router)
 app.include_router(resumes_router)
 app.include_router(stripe_router)
+app.include_router(fedapay_router)
 
 # === CORS ===
 allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5000").split(",")
